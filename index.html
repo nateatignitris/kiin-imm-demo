@@ -25,6 +25,7 @@
       --border:  rgba(255,255,255,0.07);
       --serif:   'Cormorant Garamond', Georgia, serif;
       --sans:    'Inter', system-ui, sans-serif;
+      --sf:      -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
     }
 
     html { scroll-behavior: auto; }
@@ -35,7 +36,6 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    /* Locomotive scroll container */
     [data-scroll-container] { min-height: 100vh; }
     html.has-scroll-smooth { overflow: hidden; }
     html.has-scroll-dragging { -webkit-user-select: none; user-select: none; }
@@ -43,10 +43,6 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -61,130 +57,155 @@
     ══════════════════════════════════════════ */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100; height: 80px; padding: 0 48px;
-      display: flex; align-items: center; justify-content: space-between;
+      z-index: 300; height: 120px; padding: 0 48px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
       transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
     }
     nav.scrolled {
       background: rgba(10,10,10,0.96);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
+      height: 90px;
     }
+    .nav-logo { display: flex; align-items: center; }
     .nav-wordmark {
-      height: 36px; width: auto;
+      height: 110px; width: auto;
       filter: brightness(0) invert(1);
+      transition: height 0.4s;
     }
-    .nav-right { display: flex; align-items: center; gap: 28px; }
-    .nav-phone { font-size: 13px; color: var(--dim); }
+    nav.scrolled .nav-wordmark { height: 72px; }
 
-    .hamburger {
-      display: flex; flex-direction: column; gap: 6px;
-      width: 40px; height: 40px; padding: 8px;
-      background: none; border: none; cursor: pointer;
+    .nav-center {
+      display: flex; align-items: center; gap: 36px;
+      justify-content: center;
     }
-    .hamburger span {
-      display: block; width: 22px; height: 1px;
-      background: var(--text);
-      transition: transform 0.35s, opacity 0.25s;
+    .nav-link {
+      font-family: var(--serif); font-size: 17px; font-weight: 400; font-style: italic;
+      color: rgba(240,235,224,0.75); letter-spacing: 0.04em;
+      transition: color 0.2s;
     }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-link:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex; justify-content: flex-end; align-items: center;
+    }
+    .nav-phone {
+      font-family: var(--sf);
+      font-size: 15px; font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(240,235,224,0.8);
+      transition: color 0.2s;
+    }
+    .nav-phone:hover { color: var(--text); }
+
+    /* Small plank button for nav */
+    .btn-plank-nav {
+      position: relative; display: inline-block;
+      padding: 10px 22px;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #f5e8d0; text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      cursor: pointer; border: none;
+      background:
+        repeating-linear-gradient(92deg,
+          transparent 0px, transparent 3px,
+          rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px),
+        repeating-linear-gradient(88.2deg,
+          transparent 0px, transparent 4px,
+          rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px,
+          transparent 5px, transparent 10px,
+          rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px,
+          transparent 11px, transparent 18px,
+          rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px),
+        linear-gradient(to bottom, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(0,0,0,0.22) 100%),
+        radial-gradient(ellipse 55% 18% at 68% 72%, rgba(15,5,0,0.28) 0%, transparent 100%),
+        linear-gradient(171deg, #8c5228 0%, #5a2c0e 14%, #7a4520 30%, #3e1a06 48%, #6b3918 64%, #4a2208 78%, #3a1805 100%);
+      border-top: 1px solid rgba(200,130,55,0.6);
+      border-left: 1px solid rgba(160,90,30,0.45);
+      border-right: 1px solid rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: visible;
+    }
+    .btn-plank-nav .nail {
+      position: absolute; width: 7px; height: 7px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 32%, #fff8c0 0%, #f2d060 18%, #c8900a 42%, #8b6000 64%, #4a3000 82%, #1e1200 100%);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 1px 4px rgba(0,0,0,0.75);
+    }
+    .btn-plank-nav .nail.tl { top: 5px; left: 7px; }
+    .btn-plank-nav .nail.tr { top: 5px; right: 7px; }
+    .btn-plank-nav .nail.bl { bottom: 5px; left: 7px; }
+    .btn-plank-nav .nail.br { bottom: 5px; right: 7px; }
+    .btn-plank-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 3px 8px rgba(0,0,0,0.5); }
 
     /* ══════════════════════════════════════════
-       PANEL
+       MENU MODALS
     ══════════════════════════════════════════ */
-    .panel-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 190; opacity: 0; pointer-events: none;
-      transition: opacity 0.5s;
-    }
-    .panel-overlay.active { opacity: 1; pointer-events: all; }
-
-    .panel {
-      position: fixed; top: 0; right: 0;
-      width: min(820px, 100vw); height: 100vh;
-      background: var(--main-dk);
-      z-index: 200;
-      transform: translateX(100%);
-      transition: transform 0.6s cubic-bezier(0.77,0,0.175,1);
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      overflow: hidden;
-    }
-    .panel.open { transform: translateX(0); }
-
-    .panel-left {
-      padding: 88px 40px 56px;
-      display: flex; flex-direction: column; gap: 0;
-      border-right: 1px solid rgba(255,255,255,0.06);
+    .menu-modal {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(4,1,0,0.98);
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.55s cubic-bezier(0.77,0,0.175,1);
       overflow-y: auto;
     }
-    .panel-sep {
-      width: 36px; height: 1px;
-      background: rgba(212,168,67,0.35);
-      margin-bottom: 36px;
-    }
-    .panel-info-block { margin-bottom: 32px; }
-    .panel-info-label {
-      font-size: 9px; font-weight: 600; letter-spacing: 0.28em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
-    }
-    .panel-info-text {
-      font-size: 13px; color: var(--dim); line-height: 1.8;
-    }
-    .panel-info-text a { color: inherit; }
-    .panel-sep-bottom {
-      width: 36px; height: 1px;
-      background: rgba(212,168,67,0.35);
-      margin: 28px 0 32px;
-    }
-    .panel-order {
-      position: relative;
-      display: inline-block;
-      align-self: flex-start;
-      padding: 18px 40px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
-      color: #0a0a0a; background: var(--gold);
-      transition: opacity 0.2s;
-    }
-    .panel-order:hover { opacity: 0.85; }
+    .menu-modal.open { opacity: 1; pointer-events: all; }
 
-    .panel-right {
-      padding: 80px 40px 56px 48px;
-      display: flex; flex-direction: column; justify-content: center;
-      position: relative;
+    .menu-modal-header {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 48px;
+      background: rgba(4,1,0,0.95);
+      border-bottom: 1px solid var(--border);
     }
-    .panel-close {
-      position: absolute; top: 24px; right: 24px;
-      width: 44px; height: 44px;
-      border: 1px solid rgba(212,168,67,0.3);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--serif); font-size: 20px; color: var(--dim);
-      background: none; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    .menu-modal-title {
+      font-family: var(--serif); font-size: 28px; font-weight: 600; font-style: italic;
+      color: var(--gold);
     }
-    .panel-close:hover { border-color: var(--gold); color: var(--text); }
+    .modal-close {
+      position: relative; display: inline-block;
+      padding: 12px 28px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #f5e8d0; cursor: pointer; border: none;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      background:
+        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px),
+        linear-gradient(to bottom, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(0,0,0,0.22) 100%),
+        linear-gradient(171deg, #8c5228 0%, #3e1a06 48%, #4a2208 100%);
+      border-top: 1px solid rgba(200,130,55,0.6);
+      border-left: 1px solid rgba(160,90,30,0.45);
+      border-right: 1px solid rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .modal-close:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.7); }
 
-    .panel-nav { display: flex; flex-direction: column; gap: 4px; }
-    .panel-link {
-      font-family: var(--serif); font-size: clamp(42px, 6vw, 64px);
-      font-weight: 300; font-style: italic;
-      color: rgba(240,235,224,0.75); line-height: 1.15;
-      display: block; transition: color 0.25s, padding-left 0.25s;
+    .menu-modal-body {
+      padding: 48px;
+      display: flex; flex-direction: column; gap: 32px; align-items: center;
+      transform: translateY(24px); opacity: 0;
+      transition: transform 0.6s ease 0.1s, opacity 0.6s ease 0.1s;
     }
-    .panel-link:hover { color: var(--text); padding-left: 12px; }
+    .menu-modal.open .menu-modal-body { transform: translateY(0); opacity: 1; }
+    .menu-modal-body img {
+      width: 100%; max-width: 900px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+    }
 
     /* ══════════════════════════════════════════
        HERO
     ══════════════════════════════════════════ */
     .hero {
-      position: relative; height: 100vh; min-height: 740px;
-      display: flex; align-items: center; justify-content: center;
+      position: relative; height: 100vh; min-height: 760px;
+      display: flex; flex-direction: column;
       overflow: hidden; background: var(--bg);
     }
-
     .hero-bg {
       position: absolute; inset: -12%;
       background-image: url('assets/desert.jpg');
@@ -193,71 +214,104 @@
     }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(10,10,10,0.50) 0%,
-        rgba(10,10,10,0.62) 50%,
-        rgba(10,10,10,0.95) 100%
-      );
+      background: linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.58) 50%, rgba(10,10,10,0.94) 100%);
     }
-    /* Retro CRT scanlines */
     .hero-scanlines {
       position: absolute; inset: 0; z-index: 3; pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 3px,
-        rgba(0,0,0,0.055) 3px,
-        rgba(0,0,0,0.055) 4px
-      );
+      background: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.055) 3px, rgba(0,0,0,0.055) 4px);
     }
-    /* Vignette */
     .hero-vignette {
       position: absolute; inset: 0; z-index: 2; pointer-events: none;
       background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.45) 100%);
     }
-
-    .hero-content {
+    .hero-inner {
       position: relative; z-index: 4;
-      text-align: center; padding: 0 24px;
+      display: flex; flex-direction: column;
+      width: 100%; height: 100%;
     }
-
+    .hero-content {
+      padding-top: 148px;
+      text-align: center;
+      flex-shrink: 0;
+      padding-bottom: 24px;
+    }
     .hero-wordmark {
       height: 72px; width: auto;
-      margin: 0 auto 32px;
+      margin: 0 auto 28px;
       filter: brightness(0) invert(1);
       animation: fadeIn 1s ease 0.1s both;
     }
-
     .hero-title {
       font-family: var(--serif);
-      font-size: clamp(96px, 15vw, 180px);
+      font-size: clamp(80px, 12vw, 160px);
       font-weight: 700; color: var(--text);
       line-height: 0.87; letter-spacing: -0.03em;
       animation: fadeUp 1.1s ease 0.25s both;
     }
     .hero-subtitle {
       font-family: var(--serif);
-      font-size: clamp(20px, 3vw, 36px);
+      font-size: clamp(18px, 2.5vw, 32px);
       font-weight: 300; font-style: italic;
       color: rgba(240,235,224,0.72);
-      letter-spacing: 0.06em; margin-top: 12px; margin-bottom: 4px;
+      letter-spacing: 0.06em; margin-top: 10px; margin-bottom: 4px;
       animation: fadeUp 0.9s ease 0.45s both;
     }
     .hero-location {
       font-size: 11px; font-weight: 400; letter-spacing: 0.28em;
       text-transform: uppercase; color: var(--gold);
-      margin-bottom: 56px;
+      margin-bottom: 40px;
       animation: fadeUp 0.9s ease 0.55s both;
     }
-
     .hero-btns {
       display: flex; align-items: center; justify-content: center;
       gap: 24px; flex-wrap: wrap;
       animation: fadeUp 0.9s ease 0.72s both;
     }
 
-    /* ── Wooden plank buttons ── */
+    /* ── Dish Orbs ── */
+    .hero-dishes {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 1.4s ease 0.9s both;
+    }
+    .dish-orb {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      transition: filter 0.3s;
+    }
+    .dish-orb:active, .dish-orb.dragging { cursor: grabbing; }
+    .dish-orb.dragging .dish-orb-ring { box-shadow: 0 24px 60px rgba(0,0,0,0.8), 0 0 0 2px rgba(212,168,67,0.6); }
+    .dish-orb-ring {
+      width: 185px; height: 185px; border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(212,168,67,0.22);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.5);
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+      backdrop-filter: blur(2px);
+    }
+    .dish-orb:hover .dish-orb-ring {
+      border-color: rgba(212,168,67,0.6);
+      transform: scale(1.06);
+    }
+    .dish-orb-ring img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .dish-orb-name {
+      text-align: center; margin-top: 12px;
+      font-family: var(--serif); font-size: 16px; font-weight: 600;
+      color: var(--text);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    }
+    .dish-orb-desc {
+      text-align: center; margin-top: 4px;
+      font-size: 11px; font-weight: 300; color: rgba(240,235,224,0.55);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+      max-width: 160px; margin-left: auto; margin-right: auto;
+    }
+
+    /* ── Wooden plank buttons (hero) ── */
     .btn-plank {
       position: relative; display: inline-block;
       padding: 28px 96px;
@@ -266,173 +320,77 @@
       color: #f5e8d0; text-align: center;
       text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       background:
-        /* Fine surface scratches */
-        repeating-linear-gradient(92deg,
-          transparent 0px, transparent 3px,
-          rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px,
-          transparent 4px, transparent 9px,
-          rgba(255,255,255,0.012) 9px, rgba(255,255,255,0.012) 10px
-        ),
-        /* Main wood grain — varied spacing, slight angle */
-        repeating-linear-gradient(88.2deg,
-          transparent 0px, transparent 4px,
-          rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px,
-          transparent 5px, transparent 10px,
-          rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px,
-          transparent 11px, transparent 18px,
-          rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px,
-          transparent 20px, transparent 27px,
-          rgba(255,255,255,0.02) 27px, rgba(255,255,255,0.02) 28px,
-          transparent 28px, transparent 36px,
-          rgba(0,0,0,0.04) 36px, rgba(0,0,0,0.04) 37px
-        ),
-        /* Bevel highlight top / shadow bottom */
-        linear-gradient(to bottom,
-          rgba(255,255,255,0.12) 0%,
-          rgba(255,255,255,0.03) 12%,
-          transparent 40%,
-          rgba(0,0,0,0.08) 85%,
-          rgba(0,0,0,0.22) 100%
-        ),
-        /* Dark knot cluster */
+        repeating-linear-gradient(92deg, transparent 0px, transparent 3px, rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px, transparent 4px, transparent 9px, rgba(255,255,255,0.012) 9px, rgba(255,255,255,0.012) 10px),
+        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px, transparent 11px, transparent 18px, rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px, transparent 20px, transparent 27px, rgba(255,255,255,0.02) 27px, rgba(255,255,255,0.02) 28px, transparent 28px, transparent 36px, rgba(0,0,0,0.04) 36px, rgba(0,0,0,0.04) 37px),
+        linear-gradient(to bottom, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 12%, transparent 40%, rgba(0,0,0,0.08) 85%, rgba(0,0,0,0.22) 100%),
         radial-gradient(ellipse 55% 18% at 68% 72%, rgba(15,5,0,0.28) 0%, transparent 100%),
-        /* Warm knot highlight */
         radial-gradient(ellipse 30% 12% at 28% 38%, rgba(140,70,10,0.18) 0%, transparent 100%),
-        /* Base colour — natural walnut tones */
-        linear-gradient(171deg,
-          #8c5228 0%,
-          #5a2c0e 14%,
-          #7a4520 30%,
-          #3e1a06 48%,
-          #6b3918 64%,
-          #4a2208 78%,
-          #3a1805 100%
-        );
-      border-top:    1px solid rgba(200,130,55,0.6);
-      border-left:   1px solid rgba(160,90,30,0.45);
-      border-right:  1px solid rgba(0,0,0,0.55);
+        linear-gradient(171deg, #8c5228 0%, #5a2c0e 14%, #7a4520 30%, #3e1a06 48%, #6b3918 64%, #4a2208 78%, #3a1805 100%);
+      border-top: 1px solid rgba(200,130,55,0.6);
+      border-left: 1px solid rgba(160,90,30,0.45);
+      border-right: 1px solid rgba(0,0,0,0.55);
       border-bottom: 1px solid rgba(0,0,0,0.6);
-      box-shadow:
-        0 8px 28px rgba(0,0,0,0.7),
-        0 3px 8px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.1),
-        inset 0 -1px 0 rgba(0,0,0,0.4),
-        inset 1px 0 0 rgba(255,255,255,0.04),
-        inset -1px 0 0 rgba(0,0,0,0.25);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.7), 0 3px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.4), inset 1px 0 0 rgba(255,255,255,0.04), inset -1px 0 0 rgba(0,0,0,0.25);
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       overflow: visible;
     }
-    .btn-plank:hover {
-      transform: translateY(-3px);
-      box-shadow:
-        0 14px 36px rgba(0,0,0,0.75),
-        0 5px 14px rgba(0,0,0,0.55),
-        inset 0 1px 0 rgba(255,255,255,0.1),
-        inset 0 -1px 0 rgba(0,0,0,0.4);
-    }
-    /* Nail heads — realistic brass */
+    .btn-plank:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,0.75), 0 5px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.1); }
     .btn-plank .nail {
-      position: absolute;
-      width: 11px; height: 11px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 36% 32%,
-          #fff8c0 0%,
-          #f2d060 18%,
-          #c8900a 42%,
-          #8b6000 64%,
-          #4a3000 82%,
-          #1e1200 100%
-        );
-      box-shadow:
-        inset 0 1px 2px rgba(255,255,255,0.4),
-        inset 0 -1px 2px rgba(0,0,0,0.55),
-        0 0 0 1px rgba(0,0,0,0.4),
-        0 2px 6px rgba(0,0,0,0.75);
+      position: absolute; width: 11px; height: 11px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 32%, #fff8c0 0%, #f2d060 18%, #c8900a 42%, #8b6000 64%, #4a3000 82%, #1e1200 100%);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), inset 0 -1px 2px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.75);
     }
-    .nail.tl { top:  8px; left:  10px; }
-    .nail.tr { top:  8px; right: 10px; }
-    .nail.bl { bottom: 8px; left:  10px; }
+    .nail.tl { top: 8px; left: 10px; }
+    .nail.tr { top: 8px; right: 10px; }
+    .nail.bl { bottom: 8px; left: 10px; }
     .nail.br { bottom: 8px; right: 10px; }
-
-    /* Primary plank — slightly richer amber wood */
     .btn-plank-primary {
       background:
-        repeating-linear-gradient(92deg,
-          transparent 0px, transparent 3px,
-          rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px,
-          transparent 4px, transparent 9px,
-          rgba(255,255,255,0.012) 9px, rgba(255,255,255,0.012) 10px
-        ),
-        repeating-linear-gradient(88.2deg,
-          transparent 0px, transparent 4px,
-          rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px,
-          transparent 5px, transparent 10px,
-          rgba(255,255,255,0.038) 10px, rgba(255,255,255,0.038) 11px,
-          transparent 11px, transparent 18px,
-          rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px,
-          transparent 20px, transparent 27px,
-          rgba(255,255,255,0.022) 27px, rgba(255,255,255,0.022) 28px,
-          transparent 28px, transparent 36px,
-          rgba(0,0,0,0.04) 36px, rgba(0,0,0,0.04) 37px
-        ),
-        linear-gradient(to bottom,
-          rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 12%,
-          transparent 40%, rgba(0,0,0,0.08) 85%, rgba(0,0,0,0.22) 100%
-        ),
+        repeating-linear-gradient(92deg, transparent 0px, transparent 3px, rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px, transparent 4px, transparent 9px, rgba(255,255,255,0.012) 9px, rgba(255,255,255,0.012) 10px),
+        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.038) 10px, rgba(255,255,255,0.038) 11px, transparent 11px, transparent 18px, rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px),
+        linear-gradient(to bottom, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 12%, transparent 40%, rgba(0,0,0,0.08) 85%, rgba(0,0,0,0.22) 100%),
         radial-gradient(ellipse 55% 18% at 65% 70%, rgba(20,6,0,0.3) 0%, transparent 100%),
         radial-gradient(ellipse 28% 14% at 32% 36%, rgba(160,80,12,0.2) 0%, transparent 100%),
-        linear-gradient(171deg,
-          #9e6030 0%, #662f10 14%, #8c4e24 30%,
-          #48200a 48%, #7c4420 64%, #562812 78%, #401c07 100%
-        );
+        linear-gradient(171deg, #9e6030 0%, #662f10 14%, #8c4e24 30%, #48200a 48%, #7c4420 64%, #562812 78%, #401c07 100%);
     }
 
     /* ══════════════════════════════════════════
        TRUST BAR
     ══════════════════════════════════════════ */
     .trust-bar {
-      background: var(--main); overflow: hidden; padding: 22px 0;
+      background: var(--main); overflow: hidden; padding: 32px 0;
       border-top: 1px solid rgba(255,255,255,0.05);
       border-bottom: 1px solid rgba(0,0,0,0.35);
     }
-    .trust-track { display: flex; animation: marquee 60s linear infinite; white-space: nowrap; align-items: center; }
+    .trust-track {
+      display: flex; white-space: nowrap; align-items: center;
+      will-change: transform;
+    }
     .trust-item {
-      display: inline-flex; align-items: center; gap: 40px; padding: 0 40px;
-      font-size: 13px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(240,235,224,0.6);
+      display: inline-flex; align-items: center; gap: 48px; padding: 0 48px;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(240,235,224,0.62);
     }
     .trust-item a { transition: color 0.2s; }
     .trust-item a:hover { color: var(--gold); }
-    .trust-dot { color: var(--gold); font-size: 7px; flex-shrink: 0; }
+    .trust-dot { color: var(--gold); font-size: 8px; flex-shrink: 0; }
 
-    /* Thai name callout in trust bar */
+    /* Thai name callout */
     .trust-thai {
-      display: inline-flex; align-items: center; gap: 40px; padding: 0 40px;
-      white-space: nowrap; font-size: 13px; letter-spacing: 0.04em; text-transform: none;
-      color: rgba(240,235,224,0.55);
+      display: inline-flex; align-items: center; gap: 16px; padding: 0 48px;
+      white-space: nowrap; font-size: 15px; letter-spacing: 0.02em; text-transform: none;
+      color: rgba(240,235,224,0.58);
     }
-    .trust-thai .thai-char { font-size: 16px; color: rgba(240,235,224,0.82); }
-    .trust-thai strong { color: var(--text); font-weight: 700; }
-    .trust-thai em { font-style: italic; color: var(--gold); font-weight: 500; }
+    .trust-thai .thai-char { font-size: 20px; color: rgba(240,235,224,0.88); }
+    .trust-thai strong { color: var(--text); font-weight: 700; letter-spacing: 0; }
 
-    /* Washington Post logo treatment */
-    .wapo-badge {
-      display: inline-flex; align-items: center; gap: 10px;
-      color: rgba(240,235,224,0.75); transition: color 0.2s;
-      text-decoration: none;
+    /* WaPo logo */
+    .trust-wapo {
+      display: inline-flex; align-items: center; padding: 0 48px;
+      color: rgba(240,235,224,0.7); transition: color 0.2s; flex-shrink: 0;
     }
-    .wapo-badge:hover { color: var(--text); }
-    .wapo-w {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 28px; font-weight: 700; line-height: 1;
-      color: inherit; letter-spacing: -0.02em;
-    }
-    .wapo-text {
-      display: flex; flex-direction: column; line-height: 1.2;
-      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-      font-family: var(--sans); font-weight: 600;
-    }
+    .trust-wapo:hover { color: var(--text); }
+    .trust-wapo svg { height: 22px; width: auto; display: block; fill: currentColor; }
 
     /* ══════════════════════════════════════════
        SHARED SECTION
@@ -475,36 +433,47 @@
     .who-headline { font-family: var(--serif); font-size: clamp(56px, 8vw, 104px); font-weight: 700; color: var(--text); line-height: 0.96; letter-spacing: -0.03em; margin-bottom: 36px; }
     .who-headline em { font-weight: 300; font-style: italic; }
     .who-body { font-size: 15px; font-weight: 300; color: var(--dim); line-height: 1.9; margin-bottom: 44px; max-width: 460px; }
-    .btn-outline {
-      display: inline-block; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--gold); border: 1px solid rgba(212,168,67,0.4);
-      padding: 14px 40px; transition: background 0.25s, color 0.25s;
-    }
-    .btn-outline:hover { background: var(--gold); color: var(--bg); }
     .who-photo { width: 100%; aspect-ratio: 3/4; border: 1px solid var(--border); overflow: hidden; }
     .who-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
     .who-photo:hover img { transform: scale(1.04); }
 
     /* ══════════════════════════════════════════
-       FOOD SECTION
+       PLANK BUTTON (reused for all CTAs)
     ══════════════════════════════════════════ */
-    .food-section { background: var(--bg); border-top: 1px solid var(--border); }
-    .food-header { text-align: center; margin-bottom: 100px; }
-    .food-title { font-family: var(--serif); font-size: clamp(44px, 6.5vw, 80px); font-weight: 700; color: var(--text); line-height: 1.0; letter-spacing: -0.025em; }
-    .food-title em { font-weight: 300; font-style: italic; }
-    .dish-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 72px 40px; }
-    .dish-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px; }
-    .dish-ring { width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(212,168,67,0.14); overflow: hidden; flex-shrink: 0; transition: border-color 0.35s; }
-    .dish-card:hover .dish-ring { border-color: rgba(212,168,67,0.48); }
-    .dish-ring img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
-    .dish-card:hover .dish-ring img { transform: scale(1.07); }
-    .dish-name { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
-    .dish-desc { font-size: 13px; font-weight: 300; color: var(--dim); line-height: 1.72; max-width: 200px; }
-    .food-cta-wrap { text-align: center; margin-top: 84px; }
+    .btn-plank-md {
+      position: relative; display: inline-block;
+      padding: 20px 60px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #f5e8d0; text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      cursor: pointer;
+      background:
+        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px, transparent 11px, transparent 18px, rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px),
+        linear-gradient(to bottom, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(0,0,0,0.22) 100%),
+        radial-gradient(ellipse 55% 18% at 68% 72%, rgba(15,5,0,0.28) 0%, transparent 100%),
+        linear-gradient(171deg, #9e6030 0%, #662f10 14%, #8c4e24 30%, #48200a 48%, #7c4420 64%, #562812 78%, #401c07 100%);
+      border-top: 1px solid rgba(200,130,55,0.6);
+      border-left: 1px solid rgba(160,90,30,0.45);
+      border-right: 1px solid rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      overflow: visible;
+    }
+    .btn-plank-md:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.75); }
+    .btn-plank-md .nail {
+      position: absolute; width: 9px; height: 9px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 32%, #fff8c0 0%, #f2d060 18%, #c8900a 42%, #8b6000 64%, #1e1200 100%);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), 0 0 0 1px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.75);
+    }
+    .btn-plank-md .nail.tl { top: 6px; left: 8px; }
+    .btn-plank-md .nail.tr { top: 6px; right: 8px; }
+    .btn-plank-md .nail.bl { bottom: 6px; left: 8px; }
+    .btn-plank-md .nail.br { bottom: 6px; right: 8px; }
 
     /* ══════════════════════════════════════════
-       HOURS & LOCATION
+       HOURS & LOCATION (Contact)
     ══════════════════════════════════════════ */
     .hours-section { background: #0e0905; border-top: 1px solid var(--border); }
     .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; max-width: 1140px; margin: 0 auto; }
@@ -512,14 +481,13 @@
     .hours-heading em { font-weight: 300; font-style: italic; }
     .hours-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--border); }
     .hours-row.no-b { border-bottom: none; padding-bottom: 4px; }
-    .hours-row.sub  { padding-top: 4px; padding-bottom: 16px; }
+    .hours-row.sub { padding-top: 4px; padding-bottom: 16px; }
     .hours-days { font-size: 13px; color: var(--dim); }
     .hours-time { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--text); white-space: nowrap; }
     .hours-time-sub { font-family: var(--serif); font-size: 15px; color: var(--dim); white-space: nowrap; }
     .hours-note { margin-top: 20px; font-size: 11px; font-style: italic; color: rgba(240,235,224,0.24); }
     .location-heading { font-family: var(--serif); font-size: clamp(32px, 4.5vw, 54px); font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 28px; }
-    .location-dir { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); transition: opacity 0.2s; margin-bottom: 20px; }
-    .location-dir:hover { opacity: 0.7; }
+    .location-dir-wrap { margin-bottom: 28px; }
     .location-phone { font-size: 13px; color: rgba(240,235,224,0.32); }
     .location-phone a { color: inherit; }
 
@@ -530,15 +498,48 @@
     .order-header { text-align: center; margin-bottom: 80px; }
     .order-heading { font-family: var(--serif); font-size: clamp(44px, 6.5vw, 80px); font-weight: 700; color: var(--text); line-height: 1.0; letter-spacing: -0.025em; }
     .order-heading em { font-weight: 300; font-style: italic; }
-    .platforms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 1140px; margin: 0 auto; }
-    .platform-card { padding: 40px 32px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; transition: border-color 0.25s, background 0.25s; }
-    .platform-card:hover { border-color: rgba(212,168,67,0.38); background: rgba(45,6,0,0.25); }
-    .platform-card.primary { border-color: rgba(212,168,67,0.38); background: rgba(45,6,0,0.25); }
-    .platform-name { font-family: var(--serif); font-size: 25px; font-weight: 600; color: var(--text); }
-    .platform-card.primary .platform-name { color: var(--gold); }
-    .platform-note { font-size: 12px; font-weight: 300; color: rgba(240,235,224,0.36); }
-    .platform-arrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,235,224,0.18); margin-top: 14px; }
-    .platform-card.primary .platform-arrow { color: var(--gold); }
+
+    /* Platform cards as plank style */
+    .platforms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 1140px; margin: 0 auto; }
+    .platform-plank {
+      position: relative;
+      padding: 40px 28px 36px;
+      display: flex; flex-direction: column; gap: 10px;
+      cursor: pointer; text-decoration: none;
+      overflow: visible;
+      background:
+        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.028) 10px, rgba(255,255,255,0.028) 11px, transparent 11px, transparent 20px, rgba(0,0,0,0.03) 20px, rgba(0,0,0,0.03) 21px),
+        linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 30%, rgba(0,0,0,0.15) 100%),
+        radial-gradient(ellipse 60% 20% at 70% 75%, rgba(15,5,0,0.22) 0%, transparent 100%),
+        linear-gradient(175deg, #6a3c1a 0%, #3a1805 30%, #5a3010 55%, #3d1c06 80%, #2e1504 100%);
+      border-top: 1px solid rgba(180,100,40,0.5);
+      border-left: 1px solid rgba(140,78,24,0.38);
+      border-right: 1px solid rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.07);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .platform-plank:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.07); }
+    .platform-plank.primary { background:
+        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px),
+        linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 30%, rgba(0,0,0,0.15) 100%),
+        linear-gradient(175deg, #9e6030 0%, #48200a 30%, #7c4420 55%, #562812 80%, #401c07 100%);
+      border-top-color: rgba(200,130,55,0.6);
+    }
+    .platform-plank .nail {
+      position: absolute; width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 32%, #fff8c0 0%, #f2d060 18%, #c8900a 42%, #8b6000 64%, #1e1200 100%);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 1px 4px rgba(0,0,0,0.8);
+    }
+    .platform-plank .nail.tl { top: 7px; left: 9px; }
+    .platform-plank .nail.tr { top: 7px; right: 9px; }
+    .platform-plank .nail.bl { bottom: 7px; left: 9px; }
+    .platform-plank .nail.br { bottom: 7px; right: 9px; }
+    .platform-name { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--text); }
+    .platform-plank.primary .platform-name { color: var(--gold); }
+    .platform-note { font-size: 12px; font-weight: 300; color: rgba(240,235,224,0.4); }
+    .platform-arrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,235,224,0.22); margin-top: 14px; }
+    .platform-plank.primary .platform-arrow { color: var(--gold); }
 
     /* ══════════════════════════════════════════
        BOTTOM CTA
@@ -557,24 +558,27 @@
     .footer-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
     .footer-link { font-size: 12px; color: rgba(240,235,224,0.3); transition: color 0.2s; }
     .footer-link:hover { color: rgba(240,235,224,0.7); }
-    .footer-cta-link { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); transition: opacity 0.2s; }
-    .footer-cta-link:hover { opacity: 0.7; }
 
     /* ══════════════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════════════ */
-    @media (max-width: 960px) {
-      nav, footer { padding-left: 28px; padding-right: 28px; }
-      .section { padding: 100px 28px; }
-      .cta-section { padding: 120px 28px; }
+    @media (max-width: 1100px) {
+      .nav-center { gap: 20px; }
+    }
+    @media (max-width: 900px) {
+      nav { grid-template-columns: 1fr 1fr; height: 90px; }
+      nav.scrolled { height: 72px; }
+      .nav-wordmark { height: 72px; }
+      nav.scrolled .nav-wordmark { height: 56px; }
+      .nav-center { display: none; }
+      .nav-right { justify-content: flex-end; }
       .who-inner { grid-template-columns: 1fr; }
       .who-photo { display: none; }
-      .dish-grid { grid-template-columns: repeat(2, 1fr); gap: 48px 24px; }
       .hours-grid { grid-template-columns: 1fr; gap: 64px; }
       .platforms-grid { grid-template-columns: repeat(2, 1fr); }
-      .panel { grid-template-columns: 1fr; width: 100vw; }
-      .panel-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 80px 28px 36px; }
-      .panel-right { padding: 36px 28px 56px; }
+      .section { padding: 100px 28px; }
+      .cta-section { padding: 120px 28px; }
+      nav, footer { padding-left: 28px; padding-right: 28px; }
     }
     @media (max-width: 600px) {
       nav, footer { padding-left: 20px; padding-right: 20px; }
@@ -583,67 +587,63 @@
       .cta-section { padding: 96px 20px; }
       .btn-plank { padding: 24px 52px; }
       .hero-btns { gap: 14px; }
-      .dish-grid { grid-template-columns: 1fr; }
       .platforms-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
       .hero-wordmark { height: 52px; }
+      .dish-orb-ring { width: 130px; height: 130px; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="/" aria-label="Kiin Imm Thai Restaurant">
-    <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="nav-wordmark">
-  </a>
-  <div class="nav-right">
-    <a href="tel:13012511888" class="nav-phone">(301) 251-1888</a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+<!-- MENU MODALS -->
+<div id="modal-menu" class="menu-modal" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-modal-header">
+    <p class="menu-modal-title">Our Menu</p>
+    <button class="modal-close" onclick="closeModal('menu')">Close</button>
   </div>
-</nav>
-
-<!-- PANEL OVERLAY -->
-<div class="panel-overlay" id="panelOverlay"></div>
-
-<!-- PANEL -->
-<div class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation">
-  <div class="panel-left">
-    <div class="panel-sep"></div>
-    <div class="panel-info-block">
-      <p class="panel-info-label">Location</p>
-      <p class="panel-info-text">785-D Rockville Pike<br>Rockville, MD 20852</p>
-    </div>
-    <div class="panel-info-block">
-      <p class="panel-info-label">Hours</p>
-      <p class="panel-info-text">
-        Mon–Thu &nbsp; 11:30 AM–2:30 PM · 4:00–9:30 PM<br>
-        Fri &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11:30 AM–2:30 PM · 4:00–10:00 PM<br>
-        Saturday &nbsp; 11:30 AM–10:00 PM<br>
-        Sunday &nbsp;&nbsp;&nbsp; 11:30 AM–9:00 PM
-      </p>
-    </div>
-    <div class="panel-info-block">
-      <p class="panel-info-label">Phone</p>
-      <p class="panel-info-text"><a href="tel:13012511888">(301) 251-1888</a></p>
-    </div>
-    <div class="panel-sep-bottom"></div>
-    <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
-       target="_blank" rel="noopener" class="panel-order">Order Now</a>
-  </div>
-
-  <div class="panel-right">
-    <button class="panel-close" id="panelClose" aria-label="Close">×</button>
-    <nav class="panel-nav">
-      <a href="#menu"  class="panel-link" data-panel-close>Menu</a>
-      <a href="#about" class="panel-link" data-panel-close>About</a>
-      <a href="#hours" class="panel-link" data-panel-close>Hours</a>
-      <a href="#order" class="panel-link" data-panel-close>Order</a>
-    </nav>
+  <div class="menu-modal-body">
+    <img src="assets/menu-1.png" alt="Kiin Imm Menu Page 1" loading="eager">
+    <img src="assets/menu-2.png" alt="Kiin Imm Menu Page 2" loading="lazy">
   </div>
 </div>
+
+<div id="modal-catering" class="menu-modal" role="dialog" aria-modal="true" aria-label="Catering Menu">
+  <div class="menu-modal-header">
+    <p class="menu-modal-title">Catering Menu</p>
+    <button class="modal-close" onclick="closeModal('catering')">Close</button>
+  </div>
+  <div class="menu-modal-body">
+    <img src="assets/catering-menu-1.png" alt="Kiin Imm Catering Menu Page 1" loading="eager">
+    <img src="assets/catering-menu-2.png" alt="Kiin Imm Catering Menu Page 2" loading="lazy">
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="nav-logo" aria-label="Kiin Imm Thai Restaurant">
+    <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="nav-wordmark">
+  </a>
+
+  <div class="nav-center">
+    <a href="#about" class="nav-link" data-loco-scroll>About</a>
+    <button class="btn-plank-nav" onclick="openModal('menu')" aria-label="Open menu">
+      <span class="nail tl"></span><span class="nail tr"></span>
+      <span class="nail bl"></span><span class="nail br"></span>
+      Menu
+    </button>
+    <button class="btn-plank-nav" onclick="openModal('catering')" aria-label="Open catering menu">
+      <span class="nail tl"></span><span class="nail tr"></span>
+      <span class="nail bl"></span><span class="nail br"></span>
+      Catering Menu
+    </button>
+    <a href="#contact" class="nav-link" data-loco-scroll>Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <a href="tel:13012511888" class="nav-phone">(301) 251&nbsp;1888</a>
+  </div>
+</nav>
 
 <!-- LOCOMOTIVE SCROLL CONTAINER -->
 <div id="loco-scroll" data-scroll-container>
@@ -655,85 +655,94 @@
   <div class="hero-vignette"></div>
   <div class="hero-scanlines"></div>
 
-  <div class="hero-content">
-    <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="hero-wordmark">
-    <h1 class="hero-title">KIIN IMM</h1>
-    <p class="hero-subtitle">Thai Restaurant</p>
-    <p class="hero-location">Rockville</p>
-    <div class="hero-btns">
-      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
-         target="_blank" rel="noopener" class="btn-plank btn-plank-primary">
-        <span class="nail tl"></span>
-        <span class="nail tr"></span>
-        <span class="nail bl"></span>
-        <span class="nail br"></span>
-        Order Now
-      </a>
-      <a href="tel:13012511888" class="btn-plank">
-        <span class="nail tl"></span>
-        <span class="nail tr"></span>
-        <span class="nail bl"></span>
-        <span class="nail br"></span>
-        Reserve
-      </a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="hero-wordmark">
+      <h1 class="hero-title">KIIN IMM</h1>
+      <p class="hero-subtitle">Thai Restaurant</p>
+      <p class="hero-location">Rockville</p>
+      <div class="hero-btns">
+        <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+           target="_blank" rel="noopener" class="btn-plank btn-plank-primary">
+          <span class="nail tl"></span><span class="nail tr"></span>
+          <span class="nail bl"></span><span class="nail br"></span>
+          Order Now
+        </a>
+        <a href="tel:13012511888" class="btn-plank">
+          <span class="nail tl"></span><span class="nail tr"></span>
+          <span class="nail bl"></span><span class="nail br"></span>
+          Reserve
+        </a>
+      </div>
+    </div>
+
+    <!-- Draggable dish orbs -->
+    <div class="hero-dishes" id="heroDishes">
+      <div class="dish-orb" id="orb0" style="left:13%;top:42%">
+        <div class="dish-orb-ring"><img src="assets/tom-yum-soup.jpg" alt="Tom Yum Soup"></div>
+        <p class="dish-orb-name">Tom Yum Soup</p>
+        <p class="dish-orb-desc">Lemongrass · galangal · kaffir lime</p>
+      </div>
+      <div class="dish-orb" id="orb1" style="left:34%;top:28%">
+        <div class="dish-orb-ring"><img src="assets/papaya-salad.jpg" alt="Papaya Salad"></div>
+        <p class="dish-orb-name">Papaya Salad</p>
+        <p class="dish-orb-desc">Green papaya · chili · roasted peanuts</p>
+      </div>
+      <div class="dish-orb" id="orb2" style="left:62%;top:45%">
+        <div class="dish-orb-ring"><img src="assets/pineapple-fried-rice.jpg" alt="Pineapple Fried Rice"></div>
+        <p class="dish-orb-name">Pineapple Fried Rice</p>
+        <p class="dish-orb-desc">Cashews · curry powder · jasmine rice</p>
+      </div>
+      <div class="dish-orb" id="orb3" style="left:84%;top:30%">
+        <div class="dish-orb-ring"><img src="assets/drunken-noodles.jpg" alt="Drunken Noodles"></div>
+        <p class="dish-orb-name">Drunken Noodles</p>
+        <p class="dish-orb-desc">Wide rice noodles · Thai basil · oyster sauce</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TRUST BAR -->
 <div class="trust-bar" data-scroll-section>
-  <div class="trust-track" aria-hidden="true">
+  <div class="trust-track" id="trustTrack" aria-hidden="true">
 
-    <!-- WaPo logo badge -->
-    <span class="trust-item">
-      <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener" class="wapo-badge">
-        <span class="wapo-w">W</span>
-        <span class="wapo-text"><span>The Washington</span><span>Post</span></span>
-      </a>
-      <span class="trust-dot">✦</span>
-    </span>
-
-    <!-- Thai name meaning -->
+    <!-- Set 1 -->
+    <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener" class="trust-wapo">
+      <svg viewBox="284 440 1352 210" xmlns="http://www.w3.org/2000/svg" aria-label="The Washington Post">
+        <path d="M489.91 541.833L473.153 554.274V515.428L473.661 515.174L489.91 541.833ZM509.46 532.439L489.149 500.956L452.587 527.615V576.109L446.748 582.203L449.033 584.742L454.365 579.41L478.993 599.214L506.414 569.762L503.875 567.223L490.418 581.441L472.899 567.731V559.098L509.46 532.439ZM447.256 513.651L444.717 511.112L439.639 516.19L422.628 500.956L405.87 518.729V467.441L405.363 467.188L384.797 489.023V574.332L377.942 581.695V582.457L395.715 598.96L411.456 582.457V581.695L405.87 576.109V523.806L410.948 518.729L420.343 527.361V596.675C420.343 606.323 414.249 614.194 405.109 618.764L406.378 620.795C424.913 616.987 441.416 604.292 441.416 585.757V519.49L447.256 513.651ZM379.465 472.265H377.18C373.879 479.375 369.309 482.421 360.931 482.421C344.427 482.421 333.51 469.473 319.292 469.473C297.457 469.473 286.793 489.53 286.793 507.557C286.793 508.827 286.793 510.35 287.047 511.619H289.84C289.84 501.971 297.964 492.577 311.929 492.577C314.975 492.577 317.514 493.085 320.307 493.847C298.98 506.795 284 522.283 284 546.911C284 579.41 304.566 599.722 331.986 599.722C359.153 599.722 376.926 575.094 378.957 549.45L376.672 548.181C373.372 558.336 369.055 566.207 359.915 571.539V500.956C375.403 496.893 379.211 484.706 379.465 472.265ZM356.361 573.57C351.029 575.855 344.935 577.379 338.334 577.379C330.209 577.379 324.37 575.347 319.292 571.539L343.92 558.083V501.21C346.459 501.717 348.998 501.971 351.79 501.971C353.314 501.971 354.837 501.971 356.361 501.717V573.57ZM343.158 500.956L314.214 517.205L316.245 520.252L322.338 516.951V565.953L316.245 569.254C307.105 561.637 303.55 549.45 303.55 537.517C303.55 515.682 313.198 504.764 323.1 494.608C329.701 496.386 335.795 499.432 343.158 500.956Z"/>
+        <path d="M1194.22 584.483L1177.72 572.042V514.407L1177.97 514.153L1194.22 527.102V584.483ZM1312.03 576.866L1309.74 574.327L1303.4 580.928L1295.78 573.819V519.485L1302.63 512.63L1300.09 509.837L1294.51 515.423L1277.75 500.443L1259.47 519.993V516.185L1241.7 500.443L1221.89 521.516L1224.69 524.055L1230.53 518.216L1238.4 525.325V574.073L1231.54 581.436V581.944L1249.57 598.447L1265.56 581.944V581.182L1259.47 575.596V525.325L1266.07 518.47L1275.21 527.102V583.467L1291.97 598.701L1312.03 576.866ZM1221.39 515.169L1218.85 512.376L1213.26 517.962L1191.17 500.697L1156.9 525.325V577.628L1150.8 583.975L1153.34 586.514L1158.67 581.182L1182.54 599.209L1215.29 575.089V521.263L1221.39 515.169ZM1151.06 577.12L1148.52 574.327L1142.17 580.928L1133.03 573.819V515.169H1141.92L1148.52 505.267L1148.01 504.759H1132.78V470.229L1132.27 469.722L1111.7 491.557V504.505H1106.88L1100.02 514.407L1100.53 514.915H1111.7V581.944L1105.61 588.037L1108.15 590.576L1113.48 585.245L1130.49 598.701L1151.06 577.12ZM1097.23 512.884L1094.69 510.345L1088.85 515.931L1069.05 500.443L1032.23 526.848V580.674L1025.63 587.53L1028.17 590.069L1033.76 584.483L1051.28 598.193L1024.62 629.423L1026.65 630.946C1033 626.376 1040.87 623.837 1047.47 623.837C1053.56 623.837 1057.88 626.884 1064.22 633.739C1083.52 619.267 1096.22 611.142 1096.22 602.256C1096.22 594.639 1090.63 595.146 1090.63 584.991V519.485L1097.23 512.884ZM932.96 483.686L916.965 469.214L902.492 484.701L918.488 499.174L932.96 483.686ZM1027.92 577.12L1025.63 574.581L1019.28 581.182L1011.67 574.073V519.739L1018.52 512.884L1015.98 510.091L1010.4 515.677L993.387 500.697L975.107 520.247V516.438L957.334 500.697L937.53 521.77L940.323 524.309L946.163 518.47L954.033 525.579V574.327L947.178 581.69V582.198L965.205 598.701L980.946 582.198V581.436L975.107 575.85V525.325L981.708 518.47L990.595 527.102V583.721L1007.61 598.955L1027.92 577.12ZM943.878 577.628L941.339 574.835L935.499 580.674L927.374 573.057V517.962L933.976 511.361L931.183 508.568L925.851 513.9L911.125 500.697L891.829 521.516L894.368 524.055L899.446 518.977L906.301 525.325V580.42L899.953 587.022L902.492 589.561L907.824 584.229L923.82 598.955L943.878 577.628ZM892.083 513.646L889.544 511.107L884.466 516.185L867.455 500.951L850.697 518.724V467.183L850.444 466.929L829.878 488.764V574.327L823.023 581.69V582.452L841.049 598.955L856.791 582.452V581.69L850.951 576.358V523.802L856.029 518.724L865.423 527.61V596.67C865.423 606.318 859.33 614.189 850.444 618.759L851.713 620.79C869.994 617.235 886.497 604.541 886.497 586.006V519.485L892.083 513.646ZM821.753 502.982L819.722 501.712C815.406 505.267 809.82 506.029 806.012 506.029C800.934 506.029 797.887 503.998 794.078 500.951L762.088 523.548V559.601H778.591L751.932 597.685L754.724 598.701C759.295 593.623 764.119 591.084 769.704 591.084C776.814 591.084 782.653 594.385 786.715 598.955L817.437 577.374V535.989H799.156L821.753 502.982ZM759.041 577.628L756.248 574.835L750.662 580.674L741.776 572.55V520.247L748.631 513.646L745.838 511.107L740.506 516.438L720.448 500.697L683.633 527.102V577.882L678.048 583.721L680.587 586.26L685.157 581.69L704.707 598.955L720.702 582.452H721.21L739.491 598.955L759.041 577.628ZM671.7 562.14V490.541L650.119 469.214L627.776 492.572L603.91 469.468L581.313 493.334V485.717C581.313 465.659 568.872 468.96 568.872 456.265C568.872 447.886 574.204 444.078 580.551 441.031L578.774 439C559.732 445.855 549.068 456.011 549.068 466.929C549.068 476.831 556.685 477.338 556.685 488.764V518.216C542.467 518.216 540.436 531.418 540.436 536.496C540.436 539.543 540.943 542.336 541.451 543.859H543.482C544.244 540.051 546.529 537.004 551.353 537.004H556.685V574.835L584.614 598.701L605.179 575.596L632.092 598.701L671.7 562.14ZM1069.81 576.866L1064.73 582.706L1053.31 573.819V514.407L1053.81 513.9L1069.81 526.594V576.866ZM1083.52 609.619C1083.52 614.443 1080.73 617.489 1077.17 620.536C1072.1 616.22 1066.51 612.919 1058.89 612.919C1049.75 612.919 1045.18 615.204 1038.83 619.013L1038.58 618.759L1069.81 582.706V585.498C1069.81 593.877 1071.08 597.178 1075.9 600.224C1080.73 603.271 1083.52 605.81 1083.52 609.619ZM809.058 515.169L790.27 542.59H782.907V513.9L783.415 513.646C786.969 517.454 791.793 519.231 795.602 519.231C802.203 519.485 804.742 517.962 809.058 515.169ZM796.364 586.26C792.555 581.69 786.462 579.151 780.622 579.151C774.021 579.151 770.466 581.182 765.896 583.975L765.642 583.467L787.223 553H796.364V586.26ZM720.702 576.866L716.132 581.182L704.453 570.772V514.407L704.961 513.9L720.956 526.594V576.866H720.702ZM647.326 580.674L628.284 564.425V497.396L636.663 489.018L647.58 499.935V580.674H647.326ZM603.656 571.788L597.562 578.389L581.059 564.425V498.158L589.946 489.018L603.402 502.474V571.788H603.656Z"/>
+        <path d="M1571.51 515.17L1552.72 542.591H1545.36V513.901L1545.87 513.647C1549.42 517.455 1554.25 519.233 1558.05 519.233C1564.91 519.486 1567.45 517.963 1571.51 515.17ZM1636 577.121L1633.46 574.328L1627.11 580.929L1617.72 573.82V515.17H1626.86L1633.71 505.268L1633.21 504.76H1617.72V470.484L1617.21 469.977L1596.65 491.812V504.76H1591.82L1584.97 514.662L1585.47 515.17H1596.65V582.199L1590.55 588.292L1593.09 590.831L1598.42 585.5L1615.43 598.956L1636 577.121ZM1584.2 502.983L1582.17 501.714C1577.86 505.268 1572.27 506.03 1568.46 506.03C1563.39 506.03 1560.34 503.999 1556.53 500.952L1524.29 523.549V559.602H1540.79L1514.13 597.687L1516.92 598.702C1521.49 593.624 1526.32 591.085 1532.16 591.085C1539.27 591.085 1545.1 594.386 1549.17 598.956L1579.89 577.375V535.99H1561.86L1584.2 502.983ZM1519.97 515.17L1517.43 512.377L1511.84 517.963L1489.76 500.698L1455.48 525.326V577.629L1449.39 583.976L1451.92 586.515L1457.26 581.183L1481.12 599.21L1513.88 575.09V521.264L1519.97 515.17ZM1443.8 573.313V489.273L1421.97 469.469L1397.84 495.112V476.832H1394.29V498.921L1388.7 505.014V486.226L1370.68 469.469L1349.1 491.558L1351.89 494.097L1357.22 488.765L1364.08 494.858V515.678H1363.06C1352.65 515.678 1346.3 522.787 1346.3 532.435C1346.3 537.259 1347.07 539.798 1347.57 541.322H1349.86C1350.62 537.005 1354.43 533.197 1360.01 533.197H1364.08V570.774C1351.64 575.09 1344.27 586.007 1342.75 600.987L1344.27 602.003C1349.86 595.148 1357.22 590.831 1364.08 589.308V641.357L1364.58 641.611L1386.93 621.045L1397.59 630.947L1397.84 630.693V590.07C1402.67 591.339 1406.73 594.894 1410.03 598.956L1443.8 573.313ZM1559.07 586.261C1555.26 581.691 1549.17 579.152 1543.33 579.152C1536.73 579.152 1532.92 581.183 1528.6 583.976L1528.35 583.468L1549.93 553.001H1559.07V586.261ZM1492.8 584.484L1476.3 572.043V514.408L1476.55 514.155L1492.8 527.103V584.484ZM1419.68 578.898C1413.84 573.059 1407.24 570.012 1398.1 568.996V498.667L1408.25 488.003L1419.68 498.413V578.898ZM1394.29 622.568L1388.7 617.237V508.315L1394.29 502.475V622.568Z"/>
+      </svg>
+    </a>
+    <span class="trust-dot">✦</span>
+    <span class="trust-item">1,100+ Five&#8209;Star Reviews</span>
+    <span class="trust-dot">✦</span>
     <span class="trust-thai">
       <span class="thai-char">กินอิ่ม</span>
-      &nbsp;=&nbsp;
-      <strong>"eat until full"</strong>
-      &nbsp;·&nbsp;
-      <span class="thai-char">กิน</span>&nbsp;<em>(kiin)</em>&nbsp;= to eat
-      &nbsp;·&nbsp;
-      <span class="thai-char">อิ่ม</span>&nbsp;<em>(imm)</em>&nbsp;= full / satisfied
-      <span class="trust-dot">✦</span>
+      &nbsp;=&nbsp;<strong>"eat until full"</strong>
     </span>
+    <span class="trust-dot">✦</span>
+    <span class="trust-item">PBS Signature Dish 2025</span>
+    <span class="trust-dot">✦</span>
 
-    <span class="trust-item">PBS Signature Dish 2025<span class="trust-dot">✦</span></span>
-    <span class="trust-item">★★★★★ &nbsp;1,100+ Reviews<span class="trust-dot">✦</span></span>
-    <span class="trust-item">Est. 2018<span class="trust-dot">✦</span></span>
-    <span class="trust-item">785-D Rockville Pike, MD<span class="trust-dot">✦</span></span>
-    <span class="trust-item">Authentic Thai Street Food<span class="trust-dot">✦</span></span>
-
-    <!-- Duplicate set for seamless loop -->
-    <span class="trust-item">
-      <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener" class="wapo-badge">
-        <span class="wapo-w">W</span>
-        <span class="wapo-text"><span>The Washington</span><span>Post</span></span>
-      </a>
-      <span class="trust-dot">✦</span>
-    </span>
+    <!-- Set 2 (duplicate for seamless loop) -->
+    <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener" class="trust-wapo">
+      <svg viewBox="284 440 1352 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M489.91 541.833L473.153 554.274V515.428L473.661 515.174L489.91 541.833ZM509.46 532.439L489.149 500.956L452.587 527.615V576.109L446.748 582.203L449.033 584.742L454.365 579.41L478.993 599.214L506.414 569.762L503.875 567.223L490.418 581.441L472.899 567.731V559.098L509.46 532.439ZM447.256 513.651L444.717 511.112L439.639 516.19L422.628 500.956L405.87 518.729V467.441L405.363 467.188L384.797 489.023V574.332L377.942 581.695V582.457L395.715 598.96L411.456 582.457V581.695L405.87 576.109V523.806L410.948 518.729L420.343 527.361V596.675C420.343 606.323 414.249 614.194 405.109 618.764L406.378 620.795C424.913 616.987 441.416 604.292 441.416 585.757V519.49L447.256 513.651ZM379.465 472.265H377.18C373.879 479.375 369.309 482.421 360.931 482.421C344.427 482.421 333.51 469.473 319.292 469.473C297.457 469.473 286.793 489.53 286.793 507.557C286.793 508.827 286.793 510.35 287.047 511.619H289.84C289.84 501.971 297.964 492.577 311.929 492.577C314.975 492.577 317.514 493.085 320.307 493.847C298.98 506.795 284 522.283 284 546.911C284 579.41 304.566 599.722 331.986 599.722C359.153 599.722 376.926 575.094 378.957 549.45L376.672 548.181C373.372 558.336 369.055 566.207 359.915 571.539V500.956C375.403 496.893 379.211 484.706 379.465 472.265ZM356.361 573.57C351.029 575.855 344.935 577.379 338.334 577.379C330.209 577.379 324.37 575.347 319.292 571.539L343.92 558.083V501.21C346.459 501.717 348.998 501.971 351.79 501.971C353.314 501.971 354.837 501.971 356.361 501.717V573.57ZM343.158 500.956L314.214 517.205L316.245 520.252L322.338 516.951V565.953L316.245 569.254C307.105 561.637 303.55 549.45 303.55 537.517C303.55 515.682 313.198 504.764 323.1 494.608C329.701 496.386 335.795 499.432 343.158 500.956Z"/>
+        <path d="M1194.22 584.483L1177.72 572.042V514.407L1177.97 514.153L1194.22 527.102V584.483ZM1312.03 576.866L1309.74 574.327L1303.4 580.928L1295.78 573.819V519.485L1302.63 512.63L1300.09 509.837L1294.51 515.423L1277.75 500.443L1259.47 519.993V516.185L1241.7 500.443L1221.89 521.516L1224.69 524.055L1230.53 518.216L1238.4 525.325V574.073L1231.54 581.436V581.944L1249.57 598.447L1265.56 581.944V581.182L1259.47 575.596V525.325L1266.07 518.47L1275.21 527.102V583.467L1291.97 598.701L1312.03 576.866ZM1221.39 515.169L1218.85 512.376L1213.26 517.962L1191.17 500.697L1156.9 525.325V577.628L1150.8 583.975L1153.34 586.514L1158.67 581.182L1182.54 599.209L1215.29 575.089V521.263L1221.39 515.169ZM1151.06 577.12L1148.52 574.327L1142.17 580.928L1133.03 573.819V515.169H1141.92L1148.52 505.267L1148.01 504.759H1132.78V470.229L1132.27 469.722L1111.7 491.557V504.505H1106.88L1100.02 514.407L1100.53 514.915H1111.7V581.944L1105.61 588.037L1108.15 590.576L1113.48 585.245L1130.49 598.701L1151.06 577.12ZM1097.23 512.884L1094.69 510.345L1088.85 515.931L1069.05 500.443L1032.23 526.848V580.674L1025.63 587.53L1028.17 590.069L1033.76 584.483L1051.28 598.193L1024.62 629.423L1026.65 630.946C1033 626.376 1040.87 623.837 1047.47 623.837C1053.56 623.837 1057.88 626.884 1064.22 633.739C1083.52 619.267 1096.22 611.142 1096.22 602.256C1096.22 594.639 1090.63 595.146 1090.63 584.991V519.485L1097.23 512.884ZM932.96 483.686L916.965 469.214L902.492 484.701L918.488 499.174L932.96 483.686ZM1027.92 577.12L1025.63 574.581L1019.28 581.182L1011.67 574.073V519.739L1018.52 512.884L1015.98 510.091L1010.4 515.677L993.387 500.697L975.107 520.247V516.438L957.334 500.697L937.53 521.77L940.323 524.309L946.163 518.47L954.033 525.579V574.327L947.178 581.69V582.198L965.205 598.701L980.946 582.198V581.436L975.107 575.85V525.325L981.708 518.47L990.595 527.102V583.721L1007.61 598.955L1027.92 577.12ZM943.878 577.628L941.339 574.835L935.499 580.674L927.374 573.057V517.962L933.976 511.361L931.183 508.568L925.851 513.9L911.125 500.697L891.829 521.516L894.368 524.055L899.446 518.977L906.301 525.325V580.42L899.953 587.022L902.492 589.561L907.824 584.229L923.82 598.955L943.878 577.628ZM892.083 513.646L889.544 511.107L884.466 516.185L867.455 500.951L850.697 518.724V467.183L850.444 466.929L829.878 488.764V574.327L823.023 581.69V582.452L841.049 598.955L856.791 582.452V581.69L850.951 576.358V523.802L856.029 518.724L865.423 527.61V596.67C865.423 606.318 859.33 614.189 850.444 618.759L851.713 620.79C869.994 617.235 886.497 604.541 886.497 586.006V519.485L892.083 513.646ZM821.753 502.982L819.722 501.712C815.406 505.267 809.82 506.029 806.012 506.029C800.934 506.029 797.887 503.998 794.078 500.951L762.088 523.548V559.601H778.591L751.932 597.685L754.724 598.701C759.295 593.623 764.119 591.084 769.704 591.084C776.814 591.084 782.653 594.385 786.715 598.955L817.437 577.374V535.989H799.156L821.753 502.982ZM759.041 577.628L756.248 574.835L750.662 580.674L741.776 572.55V520.247L748.631 513.646L745.838 511.107L740.506 516.438L720.448 500.697L683.633 527.102V577.882L678.048 583.721L680.587 586.26L685.157 581.69L704.707 598.955L720.702 582.452H721.21L739.491 598.955L759.041 577.628ZM671.7 562.14V490.541L650.119 469.214L627.776 492.572L603.91 469.468L581.313 493.334V485.717C581.313 465.659 568.872 468.96 568.872 456.265C568.872 447.886 574.204 444.078 580.551 441.031L578.774 439C559.732 445.855 549.068 456.011 549.068 466.929C549.068 476.831 556.685 477.338 556.685 488.764V518.216C542.467 518.216 540.436 531.418 540.436 536.496C540.436 539.543 540.943 542.336 541.451 543.859H543.482C544.244 540.051 546.529 537.004 551.353 537.004H556.685V574.835L584.614 598.701L605.179 575.596L632.092 598.701L671.7 562.14ZM1069.81 576.866L1064.73 582.706L1053.31 573.819V514.407L1053.81 513.9L1069.81 526.594V576.866ZM1083.52 609.619C1083.52 614.443 1080.73 617.489 1077.17 620.536C1072.1 616.22 1066.51 612.919 1058.89 612.919C1049.75 612.919 1045.18 615.204 1038.83 619.013L1038.58 618.759L1069.81 582.706V585.498C1069.81 593.877 1071.08 597.178 1075.9 600.224C1080.73 603.271 1083.52 605.81 1083.52 609.619ZM809.058 515.169L790.27 542.59H782.907V513.9L783.415 513.646C786.969 517.454 791.793 519.231 795.602 519.231C802.203 519.485 804.742 517.962 809.058 515.169ZM796.364 586.26C792.555 581.69 786.462 579.151 780.622 579.151C774.021 579.151 770.466 581.182 765.896 583.975L765.642 583.467L787.223 553H796.364V586.26ZM720.702 576.866L716.132 581.182L704.453 570.772V514.407L704.961 513.9L720.956 526.594V576.866H720.702ZM647.326 580.674L628.284 564.425V497.396L636.663 489.018L647.58 499.935V580.674H647.326ZM603.656 571.788L597.562 578.389L581.059 564.425V498.158L589.946 489.018L603.402 502.474V571.788H603.656Z"/>
+        <path d="M1571.51 515.17L1552.72 542.591H1545.36V513.901L1545.87 513.647C1549.42 517.455 1554.25 519.233 1558.05 519.233C1564.91 519.486 1567.45 517.963 1571.51 515.17ZM1636 577.121L1633.46 574.328L1627.11 580.929L1617.72 573.82V515.17H1626.86L1633.71 505.268L1633.21 504.76H1617.72V470.484L1617.21 469.977L1596.65 491.812V504.76H1591.82L1584.97 514.662L1585.47 515.17H1596.65V582.199L1590.55 588.292L1593.09 590.831L1598.42 585.5L1615.43 598.956L1636 577.121ZM1584.2 502.983L1582.17 501.714C1577.86 505.268 1572.27 506.03 1568.46 506.03C1563.39 506.03 1560.34 503.999 1556.53 500.952L1524.29 523.549V559.602H1540.79L1514.13 597.687L1516.92 598.702C1521.49 593.624 1526.32 591.085 1532.16 591.085C1539.27 591.085 1545.1 594.386 1549.17 598.956L1579.89 577.375V535.99H1561.86L1584.2 502.983ZM1519.97 515.17L1517.43 512.377L1511.84 517.963L1489.76 500.698L1455.48 525.326V577.629L1449.39 583.976L1451.92 586.515L1457.26 581.183L1481.12 599.21L1513.88 575.09V521.264L1519.97 515.17ZM1443.8 573.313V489.273L1421.97 469.469L1397.84 495.112V476.832H1394.29V498.921L1388.7 505.014V486.226L1370.68 469.469L1349.1 491.558L1351.89 494.097L1357.22 488.765L1364.08 494.858V515.678H1363.06C1352.65 515.678 1346.3 522.787 1346.3 532.435C1346.3 537.259 1347.07 539.798 1347.57 541.322H1349.86C1350.62 537.005 1354.43 533.197 1360.01 533.197H1364.08V570.774C1351.64 575.09 1344.27 586.007 1342.75 600.987L1344.27 602.003C1349.86 595.148 1357.22 590.831 1364.08 589.308V641.357L1364.58 641.611L1386.93 621.045L1397.59 630.947L1397.84 630.693V590.07C1402.67 591.339 1406.73 594.894 1410.03 598.956L1443.8 573.313ZM1559.07 586.261C1555.26 581.691 1549.17 579.152 1543.33 579.152C1536.73 579.152 1532.92 581.183 1528.6 583.976L1528.35 583.468L1549.93 553.001H1559.07V586.261ZM1492.8 584.484L1476.3 572.043V514.408L1476.55 514.155L1492.8 527.103V584.484ZM1419.68 578.898C1413.84 573.059 1407.24 570.012 1398.1 568.996V498.667L1408.25 488.003L1419.68 498.413V578.898ZM1394.29 622.568L1388.7 617.237V508.315L1394.29 502.475V622.568Z"/>
+      </svg>
+    </a>
+    <span class="trust-dot">✦</span>
+    <span class="trust-item">1,100+ Five&#8209;Star Reviews</span>
+    <span class="trust-dot">✦</span>
     <span class="trust-thai">
       <span class="thai-char">กินอิ่ม</span>
-      &nbsp;=&nbsp;
-      <strong>"eat until full"</strong>
-      &nbsp;·&nbsp;
-      <span class="thai-char">กิน</span>&nbsp;<em>(kiin)</em>&nbsp;= to eat
-      &nbsp;·&nbsp;
-      <span class="thai-char">อิ่ม</span>&nbsp;<em>(imm)</em>&nbsp;= full / satisfied
-      <span class="trust-dot">✦</span>
+      &nbsp;=&nbsp;<strong>"eat until full"</strong>
     </span>
-    <span class="trust-item">PBS Signature Dish 2025<span class="trust-dot">✦</span></span>
-    <span class="trust-item">★★★★★ &nbsp;1,100+ Reviews<span class="trust-dot">✦</span></span>
-    <span class="trust-item">Est. 2018<span class="trust-dot">✦</span></span>
-    <span class="trust-item">785-D Rockville Pike, MD<span class="trust-dot">✦</span></span>
-    <span class="trust-item">Authentic Thai Street Food<span class="trust-dot">✦</span></span>
+    <span class="trust-dot">✦</span>
+    <span class="trust-item">PBS Signature Dish 2025</span>
+    <span class="trust-dot">✦</span>
 
   </div>
 </div>
@@ -757,8 +766,12 @@
     <div>
       <p class="label sr">Who are we</p>
       <h2 class="who-headline sr">Eat until<br><em>full.</em></h2>
-      <p class="who-body sr">"Kiin Imm" means "eat until full" in Thai — and that is our promise. Since 2018, every dish has been made from scratch with traditional recipes, fresh herbs, and the bold flavors of Thailand's street food culture.</p>
-      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="btn-outline sr">Order Now</a>
+      <p class="who-body sr">"Kiin Imm" means "eat until full" in Thai and that is our promise. Since 2018, every dish has been made from scratch with traditional recipes, fresh herbs, and the bold flavors of Thailand's street food culture.</p>
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="btn-plank-md sr">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
+        Order Now
+      </a>
     </div>
     <div class="sr" data-scroll data-scroll-speed="2">
       <div class="who-photo">
@@ -768,70 +781,33 @@
   </div>
 </section>
 
-<!-- FOOD -->
-<section class="section food-section" id="menu" data-scroll-section>
-  <div class="section-inner">
-    <div class="food-header">
-      <p class="label sr">Our menu</p>
-      <h2 class="food-title sr">Thai street food,<br><em>done right</em></h2>
-    </div>
-    <div class="dish-grid">
-      <div class="dish-card sr" data-scroll data-scroll-speed="-1">
-        <div class="dish-ring"><img src="assets/tom-yum-soup.jpg" alt="Tom Yum Soup" loading="lazy"></div>
-        <div>
-          <p class="dish-name">Tom Yum Soup</p>
-          <p class="dish-desc">Lemongrass broth, mushrooms, galangal, kaffir lime, Thai chili</p>
-        </div>
-      </div>
-      <div class="dish-card sr" data-scroll data-scroll-speed="1">
-        <div class="dish-ring"><img src="assets/papaya-salad.jpg" alt="Papaya Salad" loading="lazy"></div>
-        <div>
-          <p class="dish-name">Papaya Salad</p>
-          <p class="dish-desc">Green papaya, Thai chili, lime, fish sauce, roasted peanuts</p>
-        </div>
-      </div>
-      <div class="dish-card sr" data-scroll data-scroll-speed="-0.8">
-        <div class="dish-ring"><img src="assets/pineapple-fried-rice.jpg" alt="Pineapple Fried Rice" loading="lazy"></div>
-        <div>
-          <p class="dish-name">Pineapple Fried Rice</p>
-          <p class="dish-desc">Jasmine rice, pineapple, cashews, curry powder, egg, scallion</p>
-        </div>
-      </div>
-      <div class="dish-card sr" data-scroll data-scroll-speed="1.2">
-        <div class="dish-ring"><img src="assets/drunken-noodles.jpg" alt="Drunken Noodles" loading="lazy"></div>
-        <div>
-          <p class="dish-name">Drunken Noodles</p>
-          <p class="dish-desc">Wide rice noodles, Thai basil, bell pepper, egg, oyster sauce</p>
-        </div>
-      </div>
-    </div>
-    <div class="food-cta-wrap sr">
-      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="btn-outline">View Full Menu</a>
-    </div>
-  </div>
-</section>
-
-<!-- HOURS & LOCATION -->
-<section class="section hours-section" id="hours" data-scroll-section>
+<!-- HOURS & CONTACT -->
+<section class="section hours-section" id="contact" data-scroll-section>
   <div class="hours-grid">
     <div>
       <p class="label sr">Hours</p>
       <h2 class="hours-heading sr">When we're<br><em>open</em></h2>
       <div class="sr">
-        <div class="hours-row no-b"><span class="hours-days">Monday – Thursday</span><span class="hours-time">11:30 AM – 2:30 PM</span></div>
-        <div class="hours-row sub"><span class="hours-days"></span><span class="hours-time-sub">4:00 PM – 9:30 PM</span></div>
-        <div class="hours-row no-b"><span class="hours-days">Friday</span><span class="hours-time">11:30 AM – 2:30 PM</span></div>
-        <div class="hours-row sub"><span class="hours-days"></span><span class="hours-time-sub">4:00 PM – 10:00 PM</span></div>
-        <div class="hours-row"><span class="hours-days">Saturday</span><span class="hours-time">11:30 AM – 10:00 PM</span></div>
-        <div class="hours-row"><span class="hours-days">Sunday</span><span class="hours-time">11:30 AM – 9:00 PM</span></div>
+        <div class="hours-row no-b"><span class="hours-days">Monday through Thursday</span><span class="hours-time">11:30 AM to 2:30 PM</span></div>
+        <div class="hours-row sub"><span class="hours-days"></span><span class="hours-time-sub">4:00 PM to 9:30 PM</span></div>
+        <div class="hours-row no-b"><span class="hours-days">Friday</span><span class="hours-time">11:30 AM to 2:30 PM</span></div>
+        <div class="hours-row sub"><span class="hours-days"></span><span class="hours-time-sub">4:00 PM to 10:00 PM</span></div>
+        <div class="hours-row"><span class="hours-days">Saturday</span><span class="hours-time">11:30 AM to 10:00 PM</span></div>
+        <div class="hours-row"><span class="hours-days">Sunday</span><span class="hours-time">11:30 AM to 9:00 PM</span></div>
         <p class="hours-note">Orders cut off 15 minutes before closing</p>
       </div>
     </div>
     <div class="sr">
       <p class="label">Location</p>
       <p class="location-heading">785-D Rockville Pike<br>Rockville, MD 20852</p>
-      <a href="https://maps.google.com/?q=785+D+Rockville+Pike+Rockville+MD+20852" target="_blank" rel="noopener" class="location-dir">Get Directions →</a>
-      <p class="location-phone"><a href="tel:13012511888">(301) 251-1888</a></p>
+      <div class="location-dir-wrap">
+        <a href="https://maps.google.com/?q=785+D+Rockville+Pike+Rockville+MD+20852" target="_blank" rel="noopener" class="btn-plank-md">
+          <span class="nail tl"></span><span class="nail tr"></span>
+          <span class="nail bl"></span><span class="nail br"></span>
+          Get Directions
+        </a>
+      </div>
+      <p class="location-phone"><a href="tel:13012511888">(301) 251 1888</a></p>
     </div>
   </div>
 </section>
@@ -844,25 +820,33 @@
       <h2 class="order-heading sr">Delivery &amp;<br><em>Pickup</em></h2>
     </div>
     <div class="platforms-grid">
-      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="platform-card primary sr">
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="platform-plank primary sr">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
         <span class="platform-name">Order Direct</span>
-        <span class="platform-note">Best value — no delivery markup</span>
-        <span class="platform-arrow">Order →</span>
+        <span class="platform-note">Best value, no delivery markup</span>
+        <span class="platform-arrow">Order &rarr;</span>
       </a>
-      <a href="https://www.doordash.com/store/kiin-imm-thai-restaurant-rockville-295180/" target="_blank" rel="noopener" class="platform-card sr">
+      <a href="https://www.doordash.com/store/kiin-imm-thai-restaurant-rockville-295180/" target="_blank" rel="noopener" class="platform-plank sr">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
         <span class="platform-name">DoorDash</span>
         <span class="platform-note">Fast delivery</span>
-        <span class="platform-arrow">Order →</span>
+        <span class="platform-arrow">Order &rarr;</span>
       </a>
-      <a href="https://www.grubhub.com/restaurant/kiin-imm-thai-restaurant-785-rockville-pike-ste-d-rockville/736454" target="_blank" rel="noopener" class="platform-card sr">
+      <a href="https://www.grubhub.com/restaurant/kiin-imm-thai-restaurant-785-rockville-pike-ste-d-rockville/736454" target="_blank" rel="noopener" class="platform-plank sr">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
         <span class="platform-name">Grubhub</span>
         <span class="platform-note">Easy reorder</span>
-        <span class="platform-arrow">Order →</span>
+        <span class="platform-arrow">Order &rarr;</span>
       </a>
-      <a href="https://www.trycaviar.com/store/kiin-imm-thai-restaurant-rockville-295180/" target="_blank" rel="noopener" class="platform-card sr">
+      <a href="https://www.trycaviar.com/store/kiin-imm-thai-restaurant-rockville-295180/" target="_blank" rel="noopener" class="platform-plank sr">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
         <span class="platform-name">Caviar</span>
         <span class="platform-note">Premium experience</span>
-        <span class="platform-arrow">Order →</span>
+        <span class="platform-arrow">Order &rarr;</span>
       </a>
     </div>
   </div>
@@ -884,12 +868,12 @@
 <!-- FOOTER -->
 <footer data-scroll-section>
   <div class="footer-inner">
-    <p class="footer-copy">© 2025 Kiin Imm Thai Restaurant &nbsp;·&nbsp; Rockville, MD</p>
+    <p class="footer-copy">&copy; 2025 Kiin Imm Thai Restaurant &nbsp;&middot;&nbsp; Rockville, MD</p>
     <div class="footer-links">
       <a href="https://www.instagram.com/kiinimmthairockville/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
       <a href="https://www.facebook.com/kiinimmthai/" target="_blank" rel="noopener" class="footer-link">Facebook</a>
       <a href="https://www.yelp.com/biz/kiin-imm-thai-restaurant-rockville-rockville" target="_blank" rel="noopener" class="footer-link">Yelp</a>
-      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="footer-cta-link">Order Online</a>
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="footer-link" style="color:var(--gold)">Order Online</a>
     </div>
   </div>
 </footer>
@@ -908,14 +892,12 @@
   const locoScroll = new LocomotiveScroll({
     el: scroller,
     smooth: true,
-    lerp: 0.07,          // inertia: lower = heavier, dreamier
-    multiplier: 0.9,     // scroll speed
-    class: 'is-inview',
+    lerp: 0.07,
+    multiplier: 0.9,
     smartphone: { smooth: true },
     tablet: { smooth: true, breakpoint: 1024 }
   });
 
-  // ── Proxy GSAP ScrollTrigger through Locomotive ──
   locoScroll.on('scroll', ScrollTrigger.update);
 
   ScrollTrigger.scrollerProxy(scroller, {
@@ -933,55 +915,127 @@
   // ── Nav scroll class ───────────────────────
   const nav = document.getElementById('nav');
   locoScroll.on('scroll', ({ scroll }) => {
-    if (scroll.y > 64) nav.classList.add('scrolled');
+    if (scroll.y > 60) nav.classList.add('scrolled');
     else               nav.classList.remove('scrolled');
+  });
+
+  // ── Scroll-velocity trust bar ──────────────
+  const trustTrack = document.getElementById('trustTrack');
+  let marqueePos = 0;
+  let marqueeVel = 0;
+  let lastScrollY = 0;
+  let rAF = null;
+
+  function animateMarquee() {
+    if (!trustTrack) return;
+    const halfWidth = trustTrack.scrollWidth / 2;
+    marqueeVel *= 0.88;
+    marqueePos += marqueeVel;
+    if (marqueePos <= -halfWidth) marqueePos += halfWidth;
+    if (marqueePos > 0)           marqueePos -= halfWidth;
+    trustTrack.style.transform = `translateX(${marqueePos}px)`;
+    if (Math.abs(marqueeVel) > 0.08) {
+      rAF = requestAnimationFrame(animateMarquee);
+    }
+  }
+
+  locoScroll.on('scroll', ({ scroll }) => {
+    const delta = scroll.y - lastScrollY;
+    lastScrollY = scroll.y;
+    if (Math.abs(delta) > 0.1) {
+      marqueeVel = -delta * 0.55;
+      cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(animateMarquee);
+    }
   });
 
   // ── Scroll reveals ─────────────────────────
   gsap.utils.toArray('.sr').forEach(el => {
     gsap.from(el, {
       opacity: 0, y: 28, duration: 0.85, ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        scroller: scroller,
-        start: 'top 90%',
-        once: true
-      }
+      scrollTrigger: { trigger: el, scroller, start: 'top 90%', once: true }
     });
   });
 
   ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
   ScrollTrigger.refresh();
 
-  // ── Panel ──────────────────────────────────
-  const hamburger    = document.getElementById('hamburger');
-  const panel        = document.getElementById('panel');
-  const panelOverlay = document.getElementById('panelOverlay');
-  const panelClose   = document.getElementById('panelClose');
+  // ── Nav anchor links via locomotive ────────
+  document.querySelectorAll('[data-loco-scroll]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) locoScroll.scrollTo(target);
+    });
+  });
 
-  const openPanel = () => {
+  // ── Menu modals ────────────────────────────
+  window.openModal = (id) => {
+    const modal = document.getElementById('modal-' + id);
+    if (!modal) return;
     locoScroll.stop();
-    panel.classList.add('open');
-    panelOverlay.classList.add('active');
-    hamburger.classList.add('open');
-    hamburger.setAttribute('aria-expanded', 'true');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
   };
-  const closePanel = () => {
+  window.closeModal = (id) => {
+    const modal = document.getElementById('modal-' + id);
+    if (!modal) return;
+    modal.classList.remove('open');
     locoScroll.start();
-    panel.classList.remove('open');
-    panelOverlay.classList.remove('active');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   };
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      ['menu','catering'].forEach(id => closeModal(id));
+    }
+  });
+  document.querySelectorAll('.menu-modal').forEach(modal => {
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        const id = modal.id.replace('modal-','');
+        closeModal(id);
+      }
+    });
+  });
 
-  hamburger.addEventListener('click', () => panel.classList.contains('open') ? closePanel() : openPanel());
-  panelClose.addEventListener('click', closePanel);
-  panelOverlay.addEventListener('click', closePanel);
-  document.querySelectorAll('[data-panel-close]').forEach(el => el.addEventListener('click', () => {
-    closePanel();
-    // Let locomotive handle anchor scroll after panel closes
-  }));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+  // ── Draggable dish orbs ────────────────────
+  document.querySelectorAll('.dish-orb').forEach(orb => {
+    let dragging = false;
+    let startPX, startPY, startLeft, startTop;
+
+    orb.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      dragging = true;
+      startPX = e.clientX;
+      startPY = e.clientY;
+      const rect = orb.getBoundingClientRect();
+      const parentRect = orb.parentElement.getBoundingClientRect();
+      startLeft = rect.left + rect.width / 2 - parentRect.left;
+      startTop  = rect.top  + rect.height / 2 - parentRect.top;
+      orb.style.left = startLeft + 'px';
+      orb.style.top  = startTop  + 'px';
+      orb.setPointerCapture(e.pointerId);
+      orb.classList.add('dragging');
+      orb.style.zIndex = 20;
+      locoScroll.stop();
+    });
+
+    orb.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      orb.style.left = (startLeft + e.clientX - startPX) + 'px';
+      orb.style.top  = (startTop  + e.clientY - startPY) + 'px';
+    });
+
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      orb.classList.remove('dragging');
+      orb.style.zIndex = '';
+      locoScroll.start();
+    };
+    orb.addEventListener('pointerup', endDrag);
+    orb.addEventListener('pointercancel', endDrag);
+  });
 </script>
 </body>
 </html>
