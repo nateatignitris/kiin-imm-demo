@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kiin Imm Thai Restaurant — Rockville, MD</title>
   <meta name="description" content="Authentic Thai street food in Rockville, MD. Order online for pickup or delivery. Featured in the Washington Post and PBS Signature Dish 2025.">
+  <link rel="preload" href="assets/hero.jpg" as="image" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,6 +16,7 @@
       --bg:         #0a0a0a;
       --bg-warm:    #0d0a07;
       --bg-surface: #0f0f0f;
+      --lining:     #2D0600;
       --gold:       #d4a843;
       --gold-dim:   rgba(212,168,67,0.3);
       --gold-faint: rgba(212,168,67,0.08);
@@ -103,10 +105,6 @@
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-    .nav-badge {
-      height: 40px; width: 40px;
-      flex-shrink: 0;
     }
     .nav-wordmark {
       height: 28px;
@@ -271,9 +269,9 @@
     .hero-bg {
       position: absolute;
       inset: -12%;
-      background-image: url('assets/hero.png');
+      background-image: url('assets/hero.jpg');
       background-size: cover;
-      background-position: center 35%;
+      background-position: center 40%;
       will-change: transform;
     }
 
@@ -305,11 +303,6 @@
       max-width: 820px;
     }
 
-    .hero-badge {
-      width: 96px; height: 96px;
-      margin: 0 auto 40px;
-    }
-
     .hero-eyebrow {
       font-family: var(--serif);
       font-style: italic;
@@ -330,36 +323,50 @@
       margin-bottom: 14px;
     }
 
-    .hero-title-sub {
-      font-family: var(--serif);
-      font-size: clamp(26px, 4vw, 52px);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text-dim);
-      margin-bottom: 56px;
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
     }
 
-    .hero-cta {
+    .hero-cta,
+    .hero-cta-reserve {
+      position: relative;
       display: inline-block;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--bg);
+      padding: 30px 108px;
+      transition: opacity 0.25s;
+      overflow: hidden;
+    }
+    .hero-cta::after,
+    .hero-cta-reserve::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(212,168,67,0.45);
+      pointer-events: none;
+    }
+    .hero-cta {
+      color: #0a0a0a;
       background: var(--gold);
-      padding: 22px 80px;
-      margin-bottom: 20px;
-      transition: opacity 0.2s;
     }
-    .hero-cta:hover { opacity: 0.86; }
+    .hero-cta:hover { opacity: 0.88; }
 
-    .hero-meta {
-      font-size: 10px;
-      font-weight: 500;
-      color: rgba(240,235,224,0.32);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+    .hero-cta-reserve {
+      color: var(--text);
+      background: var(--lining);
+      border: 1px solid rgba(212,168,67,0.3);
     }
+    .hero-cta-reserve::after {
+      border-color: rgba(240,235,224,0.2);
+    }
+    .hero-cta-reserve:hover { opacity: 0.88; }
 
     .hero-caption {
       position: absolute;
@@ -372,26 +379,6 @@
       line-height: 1.75;
     }
 
-    .hero-scroll-indicator {
-      position: absolute;
-      bottom: 52px; right: 52px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-scroll-text {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: rgba(240,235,224,0.28);
-      writing-mode: vertical-rl;
-    }
-    .hero-scroll-line {
-      width: 1px; height: 52px;
-      background: linear-gradient(to bottom, rgba(212,168,67,0.5), transparent);
-    }
 
     /* ══════════════════════════════════════════════
        TRUST BAR
@@ -1011,8 +998,7 @@
 <!-- ── NAV ────────────────────────────────────── -->
 <nav id="nav">
   <a href="/" class="nav-left" aria-label="Kiin Imm Thai Restaurant">
-    <img src="assets/logo.svg" alt="" class="nav-badge" aria-hidden="true">
-    <img src="assets/wordmark.png" alt="Kiin Imm Thai Restaurant" class="nav-wordmark">
+    <img src="assets/wordmark-sm.png" alt="Kiin Imm Thai Restaurant" class="nav-wordmark">
   </a>
   <div class="nav-right">
     <a href="tel:13012511888" class="nav-phone">(301) 251-1888</a>
@@ -1029,25 +1015,21 @@
   <div class="hero-grain" aria-hidden="true"></div>
 
   <div class="hero-content" id="heroContent">
-    <img src="assets/logo.svg" alt="Kiin Imm Thai" class="hero-badge" id="heroBadge">
     <p class="hero-eyebrow" id="heroEyebrow">Authentic Thai Street Food — Rockville, MD</p>
     <h1 class="hero-title" id="heroTitle">KIIN IMM</h1>
-    <p class="hero-title-sub" id="heroTitleSub">at home.</p>
-    <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
-       target="_blank" rel="noopener"
-       class="hero-cta" id="heroCta">Order Now</a>
-    <p class="hero-meta" id="heroMeta">Pickup &nbsp;·&nbsp; Delivery &nbsp;·&nbsp; Dine-In</p>
+    <div class="hero-btns" id="heroCtaWrap">
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+         target="_blank" rel="noopener"
+         class="hero-cta" id="heroCta">Order Now</a>
+      <a href="tel:13012511888"
+         class="hero-cta-reserve" id="heroReserve">Reserve</a>
+    </div>
   </div>
 
   <p class="hero-caption" id="heroCaption">
     "The bold, fragrant world of Thai street food.<br>
     Five fundamental tastes, one kitchen, perfectly balanced."
   </p>
-
-  <div class="hero-scroll-indicator" id="heroScroll" aria-hidden="true">
-    <span class="hero-scroll-text">Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
 </section>
 
 <!-- ── TRUST BAR ──────────────────────────────── -->
@@ -1120,10 +1102,7 @@
     </div>
     <div class="who-right gsap-reveal">
       <div class="who-photo">
-        <img src="assets/desert.png" alt="Kiin Imm Thai food close-up">
-      </div>
-      <div class="who-float" aria-hidden="true">
-        <img src="assets/logo.svg" alt="">
+        <img src="assets/desert.jpg" alt="Kiin Imm Thai food close-up">
       </div>
     </div>
   </div>
@@ -1140,7 +1119,7 @@
     <div class="dish-grid">
       <div class="dish-card gsap-reveal">
         <div class="dish-ring">
-          <img src="assets/tom-yum-soup.svg" alt="Tom Yum Soup" loading="lazy">
+          <img src="assets/tom-yum-soup.jpg" alt="Tom Yum Soup" loading="lazy">
         </div>
         <div>
           <p class="dish-name">Tom Yum Soup</p>
@@ -1150,7 +1129,7 @@
 
       <div class="dish-card gsap-reveal">
         <div class="dish-ring">
-          <img src="assets/papaya-salad.svg" alt="Papaya Salad" loading="lazy">
+          <img src="assets/papaya-salad.jpg" alt="Papaya Salad" loading="lazy">
         </div>
         <div>
           <p class="dish-name">Papaya Salad</p>
@@ -1160,7 +1139,7 @@
 
       <div class="dish-card gsap-reveal">
         <div class="dish-ring">
-          <img src="assets/pineapple-fried-rice.svg" alt="Pineapple Fried Rice" loading="lazy">
+          <img src="assets/pineapple-fried-rice.jpg" alt="Pineapple Fried Rice" loading="lazy">
         </div>
         <div>
           <p class="dish-name">Pineapple Fried Rice</p>
@@ -1170,7 +1149,7 @@
 
       <div class="dish-card gsap-reveal">
         <div class="dish-ring">
-          <img src="assets/drunken-noodles.svg" alt="Drunken Noodles" loading="lazy">
+          <img src="assets/drunken-noodles.jpg" alt="Drunken Noodles" loading="lazy">
         </div>
         <div>
           <p class="dish-name">Drunken Noodles</p>
@@ -1279,7 +1258,6 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
-      <img src="assets/logo.svg" alt="" class="footer-badge" aria-hidden="true">
       <p class="footer-copy">© 2025 Kiin Imm Thai Restaurant &nbsp;·&nbsp; Rockville, MD</p>
     </div>
     <div class="footer-links">
@@ -1293,8 +1271,8 @@
 </footer>
 
 <!-- ── GSAP ───────────────────────────────────── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 <script>
   gsap.registerPlugin(ScrollTrigger);
 
@@ -1325,16 +1303,12 @@
   // ── Page intro sequence
   const veil = document.getElementById('veil');
   gsap.timeline({ defaults: { ease: 'power3.out' } })
-    .to(veil, { opacity: 0, duration: 1.1, delay: 0.15 })
+    .to(veil, { opacity: 0, duration: 0.8, delay: 0.1 })
     .set(veil, { display: 'none' })
-    .from('#heroBadge',    { opacity: 0, scale: 0.75, duration: 1.3 }, '<0.3')
-    .from('#heroEyebrow',  { opacity: 0, y: 18, duration: 0.9 }, '<0.25')
+    .from('#heroEyebrow',  { opacity: 0, y: 18, duration: 0.9 }, '<0.1')
     .from('#heroTitle',    { opacity: 0, y: 44, duration: 1.1 }, '<0.1')
-    .from('#heroTitleSub', { opacity: 0, y: 20, duration: 0.85 }, '<0.15')
-    .from('#heroCta',      { opacity: 0, y: 22, duration: 0.75 }, '<0.12')
-    .from('#heroMeta',     { opacity: 0, duration: 0.55 }, '<0.2')
-    .from('#heroCaption',  { opacity: 0, x: -18, duration: 0.8 }, '<0.05')
-    .from('#heroScroll',   { opacity: 0, y: 10, duration: 0.55 }, '<');
+    .from('#heroCtaWrap',  { opacity: 0, y: 26, duration: 0.85 }, '<0.2')
+    .from('#heroCaption',  { opacity: 0, x: -18, duration: 0.8 }, '<0.1');
 
   // ── Hero parallax
   gsap.to('#heroBg', {
