@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,7 +27,7 @@
       --sans:    'Inter', system-ui, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -34,6 +35,11 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
+    /* Locomotive scroll container */
+    [data-scroll-container] { min-height: 100vh; }
+    html.has-scroll-smooth { overflow: hidden; }
+    html.has-scroll-dragging { -webkit-user-select: none; user-select: none; }
+    .has-scroll-smooth body { overflow: hidden; }
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
@@ -639,19 +645,22 @@
   </div>
 </div>
 
+<!-- LOCOMOTIVE SCROLL CONTAINER -->
+<div id="loco-scroll" data-scroll-container>
+
 <!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg"></div>
+<section class="hero" id="hero" data-scroll-section>
+  <div class="hero-bg" id="heroBg" data-scroll data-scroll-speed="4"></div>
   <div class="hero-overlay"></div>
   <div class="hero-vignette"></div>
   <div class="hero-scanlines"></div>
 
   <div class="hero-content">
-    <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="hero-wordmark">
-    <h1 class="hero-title">KIIN IMM</h1>
-    <p class="hero-subtitle">Thai Restaurant</p>
-    <p class="hero-location">Rockville</p>
-    <div class="hero-btns">
+    <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="hero-wordmark" data-scroll data-scroll-speed="-1.5">
+    <h1 class="hero-title" data-scroll data-scroll-speed="-2">KIIN IMM</h1>
+    <p class="hero-subtitle" data-scroll data-scroll-speed="-1.2">Thai Restaurant</p>
+    <p class="hero-location" data-scroll data-scroll-speed="-1">Rockville</p>
+    <div class="hero-btns" data-scroll data-scroll-speed="-0.8">
       <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
          target="_blank" rel="noopener" class="btn-plank btn-plank-primary">
         <span class="nail tl"></span>
@@ -672,7 +681,7 @@
 </section>
 
 <!-- TRUST BAR -->
-<div class="trust-bar">
+<div class="trust-bar" data-scroll-section>
   <div class="trust-track" aria-hidden="true">
 
     <!-- WaPo logo badge -->
@@ -730,7 +739,7 @@
 </div>
 
 <!-- BRAND COPY -->
-<section class="section copy-section" id="about">
+<section class="section copy-section" id="about" data-scroll-section>
   <div class="copy-inner">
     <p class="label sr">The philosophy</p>
     <h2 class="copy-display sr">Five tastes,<br><em>one kitchen.</em></h2>
@@ -743,7 +752,7 @@
 </section>
 
 <!-- WHO ARE WE -->
-<section class="section who-section">
+<section class="section who-section" data-scroll-section>
   <div class="who-inner">
     <div>
       <p class="label sr">Who are we</p>
@@ -751,7 +760,7 @@
       <p class="who-body sr">"Kiin Imm" means "eat until full" in Thai — and that is our promise. Since 2018, every dish has been made from scratch with traditional recipes, fresh herbs, and the bold flavors of Thailand's street food culture.</p>
       <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="btn-outline sr">Order Now</a>
     </div>
-    <div class="sr">
+    <div class="sr" data-scroll data-scroll-speed="2">
       <div class="who-photo">
         <img src="assets/hero.jpg" alt="Kiin Imm Thai food" loading="lazy">
       </div>
@@ -760,35 +769,35 @@
 </section>
 
 <!-- FOOD -->
-<section class="section food-section" id="menu">
+<section class="section food-section" id="menu" data-scroll-section>
   <div class="section-inner">
     <div class="food-header">
       <p class="label sr">Our menu</p>
       <h2 class="food-title sr">Thai street food,<br><em>done right</em></h2>
     </div>
     <div class="dish-grid">
-      <div class="dish-card sr">
+      <div class="dish-card sr" data-scroll data-scroll-speed="-1.5">
         <div class="dish-ring"><img src="assets/tom-yum-soup.jpg" alt="Tom Yum Soup" loading="lazy"></div>
         <div>
           <p class="dish-name">Tom Yum Soup</p>
           <p class="dish-desc">Lemongrass broth, mushrooms, galangal, kaffir lime, Thai chili</p>
         </div>
       </div>
-      <div class="dish-card sr">
+      <div class="dish-card sr" data-scroll data-scroll-speed="1.5">
         <div class="dish-ring"><img src="assets/papaya-salad.jpg" alt="Papaya Salad" loading="lazy"></div>
         <div>
           <p class="dish-name">Papaya Salad</p>
           <p class="dish-desc">Green papaya, Thai chili, lime, fish sauce, roasted peanuts</p>
         </div>
       </div>
-      <div class="dish-card sr">
+      <div class="dish-card sr" data-scroll data-scroll-speed="-1">
         <div class="dish-ring"><img src="assets/pineapple-fried-rice.jpg" alt="Pineapple Fried Rice" loading="lazy"></div>
         <div>
           <p class="dish-name">Pineapple Fried Rice</p>
           <p class="dish-desc">Jasmine rice, pineapple, cashews, curry powder, egg, scallion</p>
         </div>
       </div>
-      <div class="dish-card sr">
+      <div class="dish-card sr" data-scroll data-scroll-speed="2">
         <div class="dish-ring"><img src="assets/drunken-noodles.jpg" alt="Drunken Noodles" loading="lazy"></div>
         <div>
           <p class="dish-name">Drunken Noodles</p>
@@ -803,7 +812,7 @@
 </section>
 
 <!-- HOURS & LOCATION -->
-<section class="section hours-section" id="hours">
+<section class="section hours-section" id="hours" data-scroll-section>
   <div class="hours-grid">
     <div>
       <p class="label sr">Hours</p>
@@ -828,7 +837,7 @@
 </section>
 
 <!-- ORDER PLATFORMS -->
-<section class="section order-section" id="order">
+<section class="section order-section" id="order" data-scroll-section>
   <div class="section-inner">
     <div class="order-header">
       <p class="label sr">Order online</p>
@@ -860,8 +869,8 @@
 </section>
 
 <!-- BOTTOM CTA -->
-<section class="cta-section">
-  <div class="cta-watermark" aria-hidden="true">KIIN IMM</div>
+<section class="cta-section" data-scroll-section>
+  <div class="cta-watermark" aria-hidden="true" data-scroll data-scroll-speed="-2">KIIN IMM</div>
   <h2 class="cta-title sr">Ready to<br><em>eat?</em></h2>
   <div class="sr" style="display:inline-block">
     <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="btn-plank btn-plank-primary" style="display:inline-block">
@@ -873,7 +882,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer>
+<footer data-scroll-section>
   <div class="footer-inner">
     <p class="footer-copy">© 2025 Kiin Imm Thai Restaurant &nbsp;·&nbsp; Rockville, MD</p>
     <div class="footer-links">
@@ -885,58 +894,93 @@
   </div>
 </footer>
 
+</div><!-- /loco-scroll -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
 <script>
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero parallax
-  gsap.to('#heroBg', {
-    yPercent: 25, ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 }
+  const scroller = document.getElementById('loco-scroll');
+
+  // ── Locomotive Scroll ──────────────────────
+  const locoScroll = new LocomotiveScroll({
+    el: scroller,
+    smooth: true,
+    lerp: 0.07,          // inertia: lower = heavier, dreamier
+    multiplier: 0.9,     // scroll speed
+    class: 'is-inview',
+    smartphone: { smooth: true },
+    tablet: { smooth: true, breakpoint: 1024 }
   });
 
-  // Nav scroll
+  // ── Proxy GSAP ScrollTrigger through Locomotive ──
+  locoScroll.on('scroll', ScrollTrigger.update);
+
+  ScrollTrigger.scrollerProxy(scroller, {
+    scrollTop(value) {
+      return arguments.length
+        ? locoScroll.scrollTo(value, { duration: 0, disableLerp: true })
+        : locoScroll.scroll.instance.scroll.y;
+    },
+    getBoundingClientRect() {
+      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+    },
+    pinType: scroller.style.transform ? 'transform' : 'fixed'
+  });
+
+  // ── Nav scroll class ───────────────────────
   const nav = document.getElementById('nav');
-  ScrollTrigger.create({
-    start: 64,
-    onEnter:     () => nav.classList.add('scrolled'),
-    onLeaveBack: () => nav.classList.remove('scrolled')
+  locoScroll.on('scroll', ({ scroll }) => {
+    if (scroll.y > 64) nav.classList.add('scrolled');
+    else               nav.classList.remove('scrolled');
   });
 
-  // Scroll reveals
+  // ── Scroll reveals ─────────────────────────
   gsap.utils.toArray('.sr').forEach(el => {
     gsap.from(el, {
       opacity: 0, y: 28, duration: 0.85, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+      scrollTrigger: {
+        trigger: el,
+        scroller: scroller,
+        start: 'top 90%',
+        once: true
+      }
     });
   });
 
-  // Panel
+  ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
+  ScrollTrigger.refresh();
+
+  // ── Panel ──────────────────────────────────
   const hamburger    = document.getElementById('hamburger');
   const panel        = document.getElementById('panel');
   const panelOverlay = document.getElementById('panelOverlay');
   const panelClose   = document.getElementById('panelClose');
 
   const openPanel = () => {
+    locoScroll.stop();
     panel.classList.add('open');
     panelOverlay.classList.add('active');
     hamburger.classList.add('open');
     hamburger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
   };
   const closePanel = () => {
+    locoScroll.start();
     panel.classList.remove('open');
     panelOverlay.classList.remove('active');
     hamburger.classList.remove('open');
     hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
   };
 
   hamburger.addEventListener('click', () => panel.classList.contains('open') ? closePanel() : openPanel());
   panelClose.addEventListener('click', closePanel);
   panelOverlay.addEventListener('click', closePanel);
-  document.querySelectorAll('[data-panel-close]').forEach(el => el.addEventListener('click', closePanel));
+  document.querySelectorAll('[data-panel-close]').forEach(el => el.addEventListener('click', () => {
+    closePanel();
+    // Let locomotive handle anchor scroll after panel closes
+  }));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 </script>
 </body>
