@@ -649,7 +649,7 @@
 <div id="loco-scroll" data-scroll-container>
 
 <!-- HERO -->
-<section class="hero" id="hero" data-scroll-section>
+<section class="hero" id="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-vignette"></div>
@@ -948,12 +948,6 @@
         once: true
       }
     });
-  });
-
-  // ── Hero parallax (GSAP ScrollTrigger, proxied through locomotive) ──
-  gsap.to('#heroBg', {
-    yPercent: 18, ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true, scroller: scroller }
   });
 
   ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
