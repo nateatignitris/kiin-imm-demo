@@ -108,12 +108,10 @@
       height: 40px; width: 40px;
       flex-shrink: 0;
     }
-    .nav-name {
-      font-family: var(--serif);
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--text);
+    .nav-wordmark {
+      height: 28px;
+      width: auto;
+      display: block;
     }
 
     .nav-right {
@@ -578,18 +576,16 @@
     .who-photo {
       width: 100%;
       aspect-ratio: 3/4;
-      background:
-        linear-gradient(160deg, rgba(212,168,67,0.06) 0%, transparent 55%),
-        #0e0b08;
       border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
     }
-    .who-photo-logo {
-      width: 110px; height: 110px;
-      opacity: 0.12;
+    .who-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.7s ease;
     }
+    .who-photo:hover img { transform: scale(1.04); }
     .who-float {
       position: absolute;
       bottom: -24px;
@@ -627,8 +623,8 @@
 
     .dish-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 72px 56px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 72px 40px;
     }
     .dish-card {
       display: flex;
@@ -946,7 +942,7 @@
       footer { padding: 40px 28px; }
       .who-inner { grid-template-columns: 1fr; }
       .who-right { display: none; }
-      .dish-grid { grid-template-columns: repeat(2, 1fr); }
+      .dish-grid { grid-template-columns: repeat(2, 1fr); gap: 48px 24px; }
       .hours-grid { grid-template-columns: 1fr; gap: 64px; }
       .platforms-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -1016,7 +1012,7 @@
 <nav id="nav">
   <a href="/" class="nav-left" aria-label="Kiin Imm Thai Restaurant">
     <img src="assets/logo.svg" alt="" class="nav-badge" aria-hidden="true">
-    <span class="nav-name">Kiin Imm</span>
+    <img src="assets/wordmark.png" alt="Kiin Imm Thai Restaurant" class="nav-wordmark">
   </a>
   <div class="nav-right">
     <a href="tel:13012511888" class="nav-phone">(301) 251-1888</a>
@@ -1124,7 +1120,7 @@
     </div>
     <div class="who-right gsap-reveal">
       <div class="who-photo">
-        <img src="assets/logo.svg" alt="" class="who-photo-logo" aria-hidden="true">
+        <img src="assets/desert.png" alt="Kiin Imm Thai food close-up">
       </div>
       <div class="who-float" aria-hidden="true">
         <img src="assets/logo.svg" alt="">
@@ -1169,6 +1165,16 @@
         <div>
           <p class="dish-name">Pineapple Fried Rice</p>
           <p class="dish-desc">Jasmine rice, pineapple, cashews, curry powder, egg, scallion</p>
+        </div>
+      </div>
+
+      <div class="dish-card gsap-reveal">
+        <div class="dish-ring">
+          <img src="assets/drunken-noodles.svg" alt="Drunken Noodles" loading="lazy">
+        </div>
+        <div>
+          <p class="dish-name">Drunken Noodles</p>
+          <p class="dish-desc">Wide rice noodles, Thai basil, bell pepper, egg, oyster sauce, chili</p>
         </div>
       </div>
     </div>
