@@ -202,21 +202,21 @@
        HERO
     ══════════════════════════════════════════ */
     .hero {
-      position: relative; height: 100vh; min-height: 760px;
+      position: relative; height: 100vh; min-height: 700px;
       overflow: hidden; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
     }
     .hero-bg {
-      position: absolute; inset: -12%;
+      position: absolute; inset: -8%;
       background-image: url('assets/desert.jpg');
       background-size: cover; background-position: center;
-      will-change: transform;
     }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.58) 50%, rgba(10,10,10,0.94) 100%);
+      background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.55) 50%, rgba(10,10,10,0.92) 100%);
     }
     .hero-scanlines {
-      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
       background: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.055) 3px, rgba(0,0,0,0.055) 4px);
     }
     .hero-vignette {
@@ -224,20 +224,13 @@
       background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.45) 100%);
     }
     .hero-inner {
-      position: absolute; inset: 0; z-index: 4;
-      display: flex; flex-direction: column;
-      align-items: center;
-    }
-    .hero-content {
-      padding-top: 132px;
+      position: relative; z-index: 4;
       text-align: center;
-      flex-shrink: 0;
-      padding-bottom: 0;
-      width: 100%;
+      padding: 120px 24px 0;
     }
     .hero-wordmark {
-      height: 72px; width: auto;
-      margin: 0 auto 28px;
+      height: 64px; width: auto;
+      margin: 0 auto 24px;
       filter: brightness(0) invert(1);
       animation: fadeIn 1s ease 0.1s both;
     }
@@ -250,67 +243,22 @@
     }
     .hero-subtitle {
       font-family: var(--serif);
-      font-size: clamp(18px, 2.5vw, 32px);
+      font-size: clamp(18px, 2.5vw, 30px);
       font-weight: 300; font-style: italic;
       color: rgba(240,235,224,0.72);
-      letter-spacing: 0.06em; margin-top: 10px; margin-bottom: 4px;
+      letter-spacing: 0.06em; margin-top: 12px; margin-bottom: 4px;
       animation: fadeUp 0.9s ease 0.45s both;
     }
     .hero-location {
       font-size: 11px; font-weight: 400; letter-spacing: 0.28em;
       text-transform: uppercase; color: var(--gold);
-      margin-bottom: 40px;
+      margin-bottom: 44px;
       animation: fadeUp 0.9s ease 0.55s both;
     }
     .hero-btns {
       display: flex; align-items: center; justify-content: center;
       gap: 24px; flex-wrap: wrap;
       animation: fadeUp 0.9s ease 0.72s both;
-    }
-
-    /* ── Dish Orbs ── */
-    .hero-dishes {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 36%;
-      pointer-events: none;
-      animation: fadeIn 1.4s ease 0.9s both;
-    }
-    .dish-orb {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-      pointer-events: all;
-      transition: filter 0.3s;
-    }
-    .dish-orb:active, .dish-orb.dragging { cursor: grabbing; }
-    .dish-orb.dragging .dish-orb-ring { box-shadow: 0 24px 60px rgba(0,0,0,0.8), 0 0 0 2px rgba(212,168,67,0.6); }
-    .dish-orb-ring {
-      width: 185px; height: 185px; border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid rgba(212,168,67,0.22);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.5);
-      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-      backdrop-filter: blur(2px);
-    }
-    .dish-orb:hover .dish-orb-ring {
-      border-color: rgba(212,168,67,0.6);
-      transform: scale(1.06);
-    }
-    .dish-orb-ring img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-    .dish-orb-name {
-      text-align: center; margin-top: 12px;
-      font-family: var(--serif); font-size: 16px; font-weight: 600;
-      color: var(--text);
-      text-shadow: 0 2px 10px rgba(0,0,0,0.9);
-    }
-    .dish-orb-desc {
-      text-align: center; margin-top: 4px;
-      font-size: 11px; font-weight: 300; color: rgba(240,235,224,0.55);
-      text-shadow: 0 1px 6px rgba(0,0,0,0.9);
-      max-width: 160px; margin-left: auto; margin-right: auto;
     }
 
     /* ── Wooden plank buttons (hero) ── */
@@ -658,48 +606,22 @@
   <div class="hero-scanlines"></div>
 
   <div class="hero-inner">
-    <div class="hero-content">
-      <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="hero-wordmark">
-      <h1 class="hero-title">KIIN IMM</h1>
-      <p class="hero-subtitle">Thai Restaurant</p>
-      <p class="hero-location">Rockville</p>
-      <div class="hero-btns">
-        <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
-           target="_blank" rel="noopener" class="btn-plank btn-plank-primary">
-          <span class="nail tl"></span><span class="nail tr"></span>
-          <span class="nail bl"></span><span class="nail br"></span>
-          Order Now
-        </a>
-        <a href="tel:13012511888" class="btn-plank">
-          <span class="nail tl"></span><span class="nail tr"></span>
-          <span class="nail bl"></span><span class="nail br"></span>
-          Reserve
-        </a>
-      </div>
-    </div>
-
-    <!-- Draggable dish orbs -->
-    <div class="hero-dishes" id="heroDishes">
-      <div class="dish-orb" id="orb0" style="left:10%;top:38%">
-        <div class="dish-orb-ring"><img src="assets/tom-yum-soup.jpg" alt="Tom Yum Soup"></div>
-        <p class="dish-orb-name">Tom Yum Soup</p>
-        <p class="dish-orb-desc">Lemongrass · galangal · kaffir lime</p>
-      </div>
-      <div class="dish-orb" id="orb1" style="left:30%;top:22%">
-        <div class="dish-orb-ring"><img src="assets/papaya-salad.jpg" alt="Papaya Salad"></div>
-        <p class="dish-orb-name">Papaya Salad</p>
-        <p class="dish-orb-desc">Green papaya · chili · roasted peanuts</p>
-      </div>
-      <div class="dish-orb" id="orb2" style="left:68%;top:30%">
-        <div class="dish-orb-ring"><img src="assets/pineapple-fried-rice.jpg" alt="Pineapple Fried Rice"></div>
-        <p class="dish-orb-name">Pineapple Fried Rice</p>
-        <p class="dish-orb-desc">Cashews · curry powder · jasmine rice</p>
-      </div>
-      <div class="dish-orb" id="orb3" style="left:88%;top:18%">
-        <div class="dish-orb-ring"><img src="assets/drunken-noodles.jpg" alt="Drunken Noodles"></div>
-        <p class="dish-orb-name">Drunken Noodles</p>
-        <p class="dish-orb-desc">Wide rice noodles · Thai basil · oyster sauce</p>
-      </div>
+    <img src="assets/wordmark-sm.png" alt="Kiin Imm" class="hero-wordmark">
+    <h1 class="hero-title">KIIN IMM</h1>
+    <p class="hero-subtitle">Thai Restaurant</p>
+    <p class="hero-location">Rockville</p>
+    <div class="hero-btns">
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+         target="_blank" rel="noopener" class="btn-plank btn-plank-primary">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
+        Order Now
+      </a>
+      <a href="tel:13012511888" class="btn-plank">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
+        Reserve
+      </a>
     </div>
   </div>
 </section>
@@ -1000,44 +922,6 @@
     });
   });
 
-  // ── Draggable dish orbs ────────────────────
-  document.querySelectorAll('.dish-orb').forEach(orb => {
-    let dragging = false;
-    let startPX, startPY, startLeft, startTop;
-
-    orb.addEventListener('pointerdown', e => {
-      e.preventDefault();
-      dragging = true;
-      startPX = e.clientX;
-      startPY = e.clientY;
-      const rect = orb.getBoundingClientRect();
-      const parentRect = orb.parentElement.getBoundingClientRect();
-      startLeft = rect.left + rect.width / 2 - parentRect.left;
-      startTop  = rect.top  + rect.height / 2 - parentRect.top;
-      orb.style.left = startLeft + 'px';
-      orb.style.top  = startTop  + 'px';
-      orb.setPointerCapture(e.pointerId);
-      orb.classList.add('dragging');
-      orb.style.zIndex = 20;
-      locoScroll.stop();
-    });
-
-    orb.addEventListener('pointermove', e => {
-      if (!dragging) return;
-      orb.style.left = (startLeft + e.clientX - startPX) + 'px';
-      orb.style.top  = (startTop  + e.clientY - startPY) + 'px';
-    });
-
-    const endDrag = () => {
-      if (!dragging) return;
-      dragging = false;
-      orb.classList.remove('dragging');
-      orb.style.zIndex = '';
-      locoScroll.start();
-    };
-    orb.addEventListener('pointerup', endDrag);
-    orb.addEventListener('pointercancel', endDrag);
-  });
 </script>
 </body>
 </html>
