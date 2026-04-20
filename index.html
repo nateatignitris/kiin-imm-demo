@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiin Imm Thai Restaurant — Rockville, MD</title>
+  <meta name="description" content="Authentic Thai street food in Rockville, MD. Order online for pickup or delivery. Featured in the Washington Post and PBS Signature Dish 2025.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0a0a0a;
+      --bg-warm:    #0d0a07;
+      --bg-surface: #0f0f0f;
+      --gold:       #d4a843;
+      --gold-dim:   rgba(212,168,67,0.3);
+      --gold-faint: rgba(212,168,67,0.08);
+      --text:       #f0ebe0;
+      --text-dim:   rgba(240,235,224,0.62);
+      --text-faint: rgba(240,235,224,0.22);
+      --border:     rgba(255,255,255,0.07);
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ── Custom Cursor ─────────────────────────────── */
+    .cursor-dot {
+      position: fixed;
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.08s ease;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 34px; height: 34px;
+      border: 1px solid rgba(212,168,67,0.35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+    }
+    .cursor-ring.hovered {
+      width: 60px; height: 60px;
+      border-color: rgba(212,168,67,0.55);
+    }
+    @media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+    /* ── Page Veil ─────────────────────────────────── */
+    .veil {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 900;
+      pointer-events: none;
+    }
+
+    /* ── Marquee ───────────────────────────────────── */
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ══════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 76px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.45s ease, backdrop-filter 0.45s ease, border-color 0.45s ease;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-badge {
+      height: 40px; width: 40px;
+      flex-shrink: 0;
+    }
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-phone {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--text);
+      transform-origin: center;
+      transition: transform 0.35s ease, opacity 0.25s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ══════════════════════════════════════════════
+       SLIDE-OUT PANEL
+    ══════════════════════════════════════════════ */
+    .panel-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 190;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .panel-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(500px, 100vw);
+      height: 100vh;
+      background: #0e0b08;
+      border-left: 1px solid var(--border);
+      z-index: 200;
+      transform: translateX(100%);
+      transition: transform 0.55s cubic-bezier(0.77,0,0.175,1);
+      overflow-y: auto;
+      padding: 88px 52px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+    .panel.open { transform: translateX(0); }
+
+    .panel-close {
+      position: absolute;
+      top: 26px; right: 28px;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--text-dim);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--serif);
+      transition: color 0.2s;
+    }
+    .panel-close:hover { color: var(--text); }
+
+    .panel-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .panel-link {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.15;
+      transition: color 0.2s, padding-left 0.2s;
+      display: block;
+    }
+    .panel-link:hover { color: var(--gold); padding-left: 8px; }
+
+    .panel-sep {
+      width: 48px; height: 1px;
+      background: var(--border);
+    }
+
+    .panel-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .panel-meta-block {}
+    .panel-meta-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .panel-meta-text {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.75;
+    }
+    .panel-meta-text a { color: inherit; }
+
+    .panel-order-btn {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 16px 36px;
+      transition: opacity 0.2s;
+      align-self: flex-start;
+    }
+    .panel-order-btn:hover { opacity: 0.85; }
+
+    /* ══════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: -12%;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 35%, rgba(212,168,67,0.055) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 15% 70%, rgba(212,168,67,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 85% 20%, rgba(212,168,67,0.02) 0%, transparent 60%);
+      will-change: transform;
+    }
+
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+      max-width: 820px;
+    }
+
+    .hero-badge {
+      width: 96px; height: 96px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(15px, 1.8vw, 20px);
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 22px;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(80px, 13vw, 152px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .hero-title-sub {
+      font-family: var(--serif);
+      font-size: clamp(26px, 4vw, 52px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-bottom: 56px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 22px 80px;
+      margin-bottom: 20px;
+      transition: opacity 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.86; }
+
+    .hero-meta {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(240,235,224,0.32);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-caption {
+      position: absolute;
+      bottom: 52px; left: 52px;
+      max-width: 320px;
+      font-family: var(--serif);
+      font-size: 14px;
+      font-style: italic;
+      color: rgba(240,235,224,0.3);
+      line-height: 1.75;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 52px; right: 52px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-scroll-text {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(240,235,224,0.28);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, rgba(212,168,67,0.5), transparent);
+    }
+
+    /* ══════════════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════════════ */
+    .trust-bar {
+      background: #0d0a06;
+      overflow: hidden;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .trust-track {
+      display: flex;
+      animation: marquee 44s linear infinite;
+      white-space: nowrap;
+    }
+    .trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 30px;
+      padding: 0 30px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .trust-item a { transition: color 0.2s; }
+    .trust-item a:hover { color: var(--gold); }
+    .trust-dot { color: var(--gold); font-size: 5px; }
+
+    /* ══════════════════════════════════════════════
+       SHARED SECTION
+    ══════════════════════════════════════════════ */
+    .section {
+      padding: 140px 52px;
+    }
+    .section-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .label {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+    }
+
+    /* ══════════════════════════════════════════════
+       BRAND COPY
+    ══════════════════════════════════════════════ */
+    .copy-section {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .copy-inner {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .copy-display {
+      font-family: var(--serif);
+      font-size: clamp(48px, 7.5vw, 96px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      margin-bottom: 64px;
+    }
+    .copy-display em {
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .copy-lead {
+      font-family: var(--serif);
+      font-size: clamp(19px, 2.2vw, 25px);
+      font-weight: 400;
+      color: rgba(240,235,224,0.82);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .copy-lead::first-letter {
+      font-family: var(--serif);
+      font-size: 5.8em;
+      font-weight: 700;
+      color: var(--gold);
+      float: left;
+      line-height: 0.72;
+      margin-right: 14px;
+      margin-top: 10px;
+    }
+
+    .copy-body {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(240,235,224,0.48);
+      line-height: 1.95;
+      margin-bottom: 20px;
+    }
+
+    .copy-divider {
+      width: 48px; height: 1px;
+      background: var(--border);
+      margin: 48px 0;
+    }
+
+    .copy-press {
+      font-size: 13px;
+      color: rgba(240,235,224,0.32);
+      line-height: 1.8;
+    }
+    .copy-press a {
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: opacity 0.2s;
+    }
+    .copy-press a:hover { opacity: 0.7; }
+
+    /* ══════════════════════════════════════════════
+       WHO ARE WE
+    ══════════════════════════════════════════════ */
+    .who-section {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .who-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 96px;
+      align-items: center;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .who-headline {
+      font-family: var(--serif);
+      font-size: clamp(56px, 8vw, 104px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      margin-bottom: 36px;
+    }
+    .who-headline em {
+      font-weight: 300;
+      font-style: italic;
+    }
+    .who-body {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 1.9;
+      margin-bottom: 44px;
+      max-width: 460px;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(212,168,67,0.4);
+      padding: 14px 40px;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-outline:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    .who-right {
+      position: relative;
+    }
+    .who-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background:
+        linear-gradient(160deg, rgba(212,168,67,0.06) 0%, transparent 55%),
+        #0e0b08;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .who-photo-logo {
+      width: 110px; height: 110px;
+      opacity: 0.12;
+    }
+    .who-float {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      width: 76px; height: 76px;
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    /* ══════════════════════════════════════════════
+       FOOD SECTION
+    ══════════════════════════════════════════════ */
+    .food-section {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .food-header {
+      text-align: center;
+      margin-bottom: 100px;
+    }
+    .food-title {
+      font-family: var(--serif);
+      font-size: clamp(44px, 6.5vw, 80px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+    }
+    .food-title em { font-weight: 300; font-style: italic; }
+
+    .dish-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 72px 56px;
+    }
+    .dish-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 28px;
+    }
+    .dish-ring {
+      width: 216px; height: 216px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,168,67,0.14);
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: border-color 0.35s ease;
+    }
+    .dish-card:hover .dish-ring {
+      border-color: rgba(212,168,67,0.48);
+    }
+    .dish-ring img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .dish-card:hover .dish-ring img { transform: scale(1.07); }
+
+    .dish-name {
+      font-family: var(--serif);
+      font-size: 27px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .dish-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 1.72;
+      max-width: 210px;
+    }
+
+    .food-cta-wrap {
+      text-align: center;
+      margin-top: 84px;
+    }
+
+    /* ══════════════════════════════════════════════
+       HOURS & LOCATION
+    ══════════════════════════════════════════════ */
+    .hours-section {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+    }
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 96px;
+      align-items: start;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .hours-heading {
+      font-family: var(--serif);
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      margin-bottom: 52px;
+    }
+    .hours-heading em { font-weight: 300; font-style: italic; }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .hours-row.no-border { border-bottom: none; padding-bottom: 4px; }
+    .hours-row.sub { padding-top: 4px; padding-bottom: 16px; }
+    .hours-days {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-dim);
+    }
+    .hours-time {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .hours-time-sub {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .hours-note {
+      margin-top: 20px;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(240,235,224,0.24);
+    }
+
+    .location-heading {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .location-directions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      transition: opacity 0.2s;
+      margin-bottom: 20px;
+    }
+    .location-directions:hover { opacity: 0.7; }
+    .location-phone {
+      font-size: 13px;
+      color: rgba(240,235,224,0.32);
+    }
+    .location-phone a { color: inherit; }
+
+    /* ══════════════════════════════════════════════
+       ORDER PLATFORMS
+    ══════════════════════════════════════════════ */
+    .order-section {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .order-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .order-heading {
+      font-family: var(--serif);
+      font-size: clamp(44px, 6.5vw, 80px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+    }
+    .order-heading em { font-weight: 300; font-style: italic; }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .platform-card {
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .platform-card:hover {
+      border-color: rgba(212,168,67,0.38);
+      background: var(--gold-faint);
+    }
+    .platform-card.primary {
+      border-color: rgba(212,168,67,0.38);
+      background: var(--gold-faint);
+    }
+    .platform-name {
+      font-family: var(--serif);
+      font-size: 25px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .platform-card.primary .platform-name { color: var(--gold); }
+    .platform-note {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(240,235,224,0.36);
+    }
+    .platform-arrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(240,235,224,0.18);
+      margin-top: 14px;
+    }
+    .platform-card.primary .platform-arrow { color: var(--gold); }
+
+    /* ══════════════════════════════════════════════
+       BOTTOM CTA
+    ══════════════════════════════════════════════ */
+    .cta-section {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 168px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--serif);
+      font-size: clamp(120px, 22vw, 280px);
+      font-weight: 700;
+      color: rgba(240,235,224,0.018);
+      white-space: nowrap;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .cta-title {
+      position: relative;
+      font-family: var(--serif);
+      font-size: clamp(56px, 9vw, 112px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      margin-bottom: 60px;
+    }
+    .cta-title em { font-weight: 300; font-style: italic; }
+
+    .btn-cta {
+      position: relative;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 22px 80px;
+      transition: opacity 0.2s;
+    }
+    .btn-cta:hover { opacity: 0.87; }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    footer {
+      background: #060402;
+      padding: 52px 52px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .footer-badge {
+      height: 28px; width: 28px;
+      opacity: 0.3;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(240,235,224,0.24);
+    }
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer-link {
+      font-size: 12px;
+      color: rgba(240,235,224,0.32);
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: rgba(240,235,224,0.7); }
+    .footer-cta-link {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      transition: opacity 0.2s;
+    }
+    .footer-cta-link:hover { opacity: 0.7; }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      nav { padding: 0 28px; }
+      .section { padding: 100px 28px; }
+      .cta-section { padding: 120px 28px; }
+      footer { padding: 40px 28px; }
+      .who-inner { grid-template-columns: 1fr; }
+      .who-right { display: none; }
+      .dish-grid { grid-template-columns: repeat(2, 1fr); }
+      .hours-grid { grid-template-columns: 1fr; gap: 64px; }
+      .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-phone { display: none; }
+      .section { padding: 88px 20px; }
+      .cta-section { padding: 96px 20px; }
+      footer { padding: 36px 20px; }
+      .hero-caption { display: none; }
+      .hero-scroll-indicator { display: none; }
+      .dish-grid { grid-template-columns: 1fr; }
+      .platforms-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .panel { padding: 80px 28px 40px; }
+      .panel-link { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Custom Cursor ───────────────────────────── -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── Page veil ──────────────────────────────── -->
+<div class="veil" id="veil"></div>
+
+<!-- ── Panel overlay ──────────────────────────── -->
+<div class="panel-overlay" id="panelOverlay"></div>
+
+<!-- ── Slide-out panel ────────────────────────── -->
+<div class="panel" id="panel" aria-label="Navigation menu" role="dialog" aria-modal="true">
+  <button class="panel-close" id="panelClose" aria-label="Close menu">×</button>
+  <nav class="panel-nav">
+    <a href="#menu"  class="panel-link" data-panel-close>Menu</a>
+    <a href="#about" class="panel-link" data-panel-close>About</a>
+    <a href="#hours" class="panel-link" data-panel-close>Hours</a>
+    <a href="#order" class="panel-link" data-panel-close>Order</a>
+  </nav>
+  <div class="panel-sep"></div>
+  <div class="panel-meta">
+    <div class="panel-meta-block">
+      <p class="panel-meta-label">Location</p>
+      <p class="panel-meta-text">785-D Rockville Pike<br>Rockville, MD 20852</p>
+    </div>
+    <div class="panel-meta-block">
+      <p class="panel-meta-label">Hours</p>
+      <p class="panel-meta-text">
+        Mon–Thu &nbsp; 11:30 AM – 2:30 PM · 4:00 – 9:30 PM<br>
+        Fri &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11:30 AM – 2:30 PM · 4:00 – 10:00 PM<br>
+        Saturday &nbsp; 11:30 AM – 10:00 PM<br>
+        Sunday &nbsp;&nbsp;&nbsp; 11:30 AM – 9:00 PM
+      </p>
+    </div>
+    <div class="panel-meta-block">
+      <p class="panel-meta-label">Phone</p>
+      <p class="panel-meta-text"><a href="tel:13012511888">(301) 251-1888</a></p>
+    </div>
+  </div>
+  <div class="panel-sep"></div>
+  <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+     target="_blank" rel="noopener" class="panel-order-btn">Order Now</a>
+</div>
+
+<!-- ── NAV ────────────────────────────────────── -->
+<nav id="nav">
+  <a href="/" class="nav-left" aria-label="Kiin Imm Thai Restaurant">
+    <img src="assets/logo.svg" alt="" class="nav-badge" aria-hidden="true">
+    <span class="nav-name">Kiin Imm</span>
+  </a>
+  <div class="nav-right">
+    <a href="tel:13012511888" class="nav-phone">(301) 251-1888</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+
+  <div class="hero-content" id="heroContent">
+    <img src="assets/logo.svg" alt="Kiin Imm Thai" class="hero-badge" id="heroBadge">
+    <p class="hero-eyebrow" id="heroEyebrow">Authentic Thai Street Food — Rockville, MD</p>
+    <h1 class="hero-title" id="heroTitle">KIIN IMM</h1>
+    <p class="hero-title-sub" id="heroTitleSub">at home.</p>
+    <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+       target="_blank" rel="noopener"
+       class="hero-cta" id="heroCta">Order Now</a>
+    <p class="hero-meta" id="heroMeta">Pickup &nbsp;·&nbsp; Delivery &nbsp;·&nbsp; Dine-In</p>
+  </div>
+
+  <p class="hero-caption" id="heroCaption">
+    "The bold, fragrant world of Thai street food.<br>
+    Five fundamental tastes, one kitchen, perfectly balanced."
+  </p>
+
+  <div class="hero-scroll-indicator" id="heroScroll" aria-hidden="true">
+    <span class="hero-scroll-text">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ──────────────────────────────── -->
+<div class="trust-bar" aria-label="Press and accolades">
+  <div class="trust-track" aria-hidden="true">
+    <span class="trust-item"><a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener">Washington Post</a><span class="trust-dot">✦</span></span>
+    <span class="trust-item">PBS Signature Dish 2025<span class="trust-dot">✦</span></span>
+    <span class="trust-item">★★★★★ &nbsp;1,100+ Reviews<span class="trust-dot">✦</span></span>
+    <span class="trust-item">Est. 2018<span class="trust-dot">✦</span></span>
+    <span class="trust-item">785-D Rockville Pike, MD<span class="trust-dot">✦</span></span>
+    <span class="trust-item">Authentic Thai Street Food<span class="trust-dot">✦</span></span>
+    <span class="trust-item"><a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener">Washington Post</a><span class="trust-dot">✦</span></span>
+    <span class="trust-item">PBS Signature Dish 2025<span class="trust-dot">✦</span></span>
+    <span class="trust-item">★★★★★ &nbsp;1,100+ Reviews<span class="trust-dot">✦</span></span>
+    <span class="trust-item">Est. 2018<span class="trust-dot">✦</span></span>
+    <span class="trust-item">785-D Rockville Pike, MD<span class="trust-dot">✦</span></span>
+    <span class="trust-item">Authentic Thai Street Food<span class="trust-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- ── BRAND COPY ─────────────────────────────── -->
+<section class="section copy-section" id="about">
+  <div class="copy-inner">
+    <p class="label gsap-reveal">The philosophy</p>
+    <h2 class="copy-display gsap-reveal">
+      Five tastes,<br><em>one kitchen.</em>
+    </h2>
+    <p class="copy-lead gsap-reveal">
+      Some people are sweet, some are salty, and everybody knows someone who is a little spicy.
+      Others might be considered downright bitter or sour. In the art of Thai street cuisine,
+      those five fundamental tastes are balanced into each dish or the overall meal.
+    </p>
+    <p class="copy-body gsap-reveal">
+      While Thai cooking may be known for its intense flavors, palates may be pleasantly surprised
+      at the variety of refreshing flavors and aromas, such as ginger, coconut, lemongrass and kaffir
+      lime, that give many of the dishes unique depth and complexity.
+    </p>
+    <p class="copy-body gsap-reveal">
+      Kiin Imm Thai offers a unique menu reflecting the traditions of Thai street food cooking that
+      still thrives in the Far East, with selections the whole family can enjoy. From traditional bites
+      like Grilled Pork Skewers with sticky rice, Thai Fish Cakes and Crispy Duck Rolls to sultry soups,
+      fresh Thai salads and creamy curries — the flavors in each dish are bold and balanced.
+    </p>
+    <div class="copy-divider gsap-reveal"></div>
+    <p class="copy-press gsap-reveal">
+      Featured in the
+      <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html"
+         target="_blank" rel="noopener">Washington Post</a>
+      and PBS Signature Dish 2025 &nbsp;·&nbsp; 1,100+ five-star Yelp reviews &nbsp;·&nbsp; Est. 2018
+    </p>
+  </div>
+</section>
+
+<!-- ── WHO ARE WE ─────────────────────────────── -->
+<section class="section who-section">
+  <div class="who-inner">
+    <div class="who-left">
+      <p class="label gsap-reveal">Who are we</p>
+      <h2 class="who-headline gsap-reveal">
+        Eat until<br><em>full.</em>
+      </h2>
+      <p class="who-body gsap-reveal">
+        "Kiin Imm" means "eat until full" in Thai — and that is our promise. Since 2018,
+        every dish has been made from scratch with traditional recipes, fresh herbs, and the
+        bold flavors of Thailand's street food culture. We are a family-run restaurant
+        devoted to what we do best: authentic Thai street food.
+      </p>
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+         target="_blank" rel="noopener" class="btn-outline gsap-reveal">Order Now</a>
+    </div>
+    <div class="who-right gsap-reveal">
+      <div class="who-photo">
+        <img src="assets/logo.svg" alt="" class="who-photo-logo" aria-hidden="true">
+      </div>
+      <div class="who-float" aria-hidden="true">
+        <img src="assets/logo.svg" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOD ───────────────────────────────────── -->
+<section class="section food-section" id="menu">
+  <div class="section-inner">
+    <div class="food-header">
+      <p class="label gsap-reveal">Our menu</p>
+      <h2 class="food-title gsap-reveal">Thai street food,<br><em>done right</em></h2>
+    </div>
+
+    <div class="dish-grid">
+      <div class="dish-card gsap-reveal">
+        <div class="dish-ring">
+          <img src="assets/tom-yum-soup.svg" alt="Tom Yum Soup" loading="lazy">
+        </div>
+        <div>
+          <p class="dish-name">Tom Yum Soup</p>
+          <p class="dish-desc">Lemongrass broth, mushrooms, galangal, kaffir lime, Thai chili</p>
+        </div>
+      </div>
+
+      <div class="dish-card gsap-reveal">
+        <div class="dish-ring">
+          <img src="assets/papaya-salad.svg" alt="Papaya Salad" loading="lazy">
+        </div>
+        <div>
+          <p class="dish-name">Papaya Salad</p>
+          <p class="dish-desc">Green papaya, Thai chili, lime, fish sauce, roasted peanuts</p>
+        </div>
+      </div>
+
+      <div class="dish-card gsap-reveal">
+        <div class="dish-ring">
+          <img src="assets/pineapple-fried-rice.svg" alt="Pineapple Fried Rice" loading="lazy">
+        </div>
+        <div>
+          <p class="dish-name">Pineapple Fried Rice</p>
+          <p class="dish-desc">Jasmine rice, pineapple, cashews, curry powder, egg, scallion</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="food-cta-wrap gsap-reveal">
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+         target="_blank" rel="noopener" class="btn-outline">View Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOURS & LOCATION ───────────────────────── -->
+<section class="section hours-section" id="hours">
+  <div class="hours-grid">
+    <div>
+      <p class="label gsap-reveal">Hours</p>
+      <h2 class="hours-heading gsap-reveal">When we're<br><em>open</em></h2>
+      <div class="gsap-reveal">
+        <div class="hours-row no-border">
+          <span class="hours-days">Monday – Thursday</span>
+          <span class="hours-time">11:30 AM – 2:30 PM</span>
+        </div>
+        <div class="hours-row sub">
+          <span class="hours-days"></span>
+          <span class="hours-time-sub">4:00 PM – 9:30 PM</span>
+        </div>
+        <div class="hours-row no-border">
+          <span class="hours-days">Friday</span>
+          <span class="hours-time">11:30 AM – 2:30 PM</span>
+        </div>
+        <div class="hours-row sub">
+          <span class="hours-days"></span>
+          <span class="hours-time-sub">4:00 PM – 10:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-days">Saturday</span>
+          <span class="hours-time">11:30 AM – 10:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-days">Sunday</span>
+          <span class="hours-time">11:30 AM – 9:00 PM</span>
+        </div>
+        <p class="hours-note">Orders cut off 15 minutes before closing</p>
+      </div>
+    </div>
+
+    <div class="gsap-reveal">
+      <p class="label">Location</p>
+      <p class="location-heading">785-D Rockville Pike<br>Rockville, MD 20852</p>
+      <a href="https://maps.google.com/?q=785+D+Rockville+Pike+Rockville+MD+20852"
+         target="_blank" rel="noopener" class="location-directions">Get Directions →</a>
+      <p class="location-phone"><a href="tel:13012511888">(301) 251-1888</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ORDER PLATFORMS ────────────────────────── -->
+<section class="section order-section" id="order">
+  <div class="section-inner">
+    <div class="order-header">
+      <p class="label gsap-reveal">Order online</p>
+      <h2 class="order-heading gsap-reveal">Delivery &amp;<br><em>Pickup</em></h2>
+    </div>
+    <div class="platforms-grid">
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+         target="_blank" rel="noopener" class="platform-card primary gsap-reveal">
+        <span class="platform-name">Order Direct</span>
+        <span class="platform-note">Best value — no delivery markup</span>
+        <span class="platform-arrow">Order →</span>
+      </a>
+      <a href="https://www.doordash.com/store/kiin-imm-thai-restaurant-rockville-295180/"
+         target="_blank" rel="noopener" class="platform-card gsap-reveal">
+        <span class="platform-name">DoorDash</span>
+        <span class="platform-note">Fast delivery</span>
+        <span class="platform-arrow">Order →</span>
+      </a>
+      <a href="https://www.grubhub.com/restaurant/kiin-imm-thai-restaurant-785-rockville-pike-ste-d-rockville/736454"
+         target="_blank" rel="noopener" class="platform-card gsap-reveal">
+        <span class="platform-name">Grubhub</span>
+        <span class="platform-note">Easy reorder</span>
+        <span class="platform-arrow">Order →</span>
+      </a>
+      <a href="https://www.trycaviar.com/store/kiin-imm-thai-restaurant-rockville-295180/"
+         target="_blank" rel="noopener" class="platform-card gsap-reveal">
+        <span class="platform-name">Caviar</span>
+        <span class="platform-note">Premium experience</span>
+        <span class="platform-arrow">Order →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOTTOM CTA ─────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-watermark" aria-hidden="true">KIIN IMM</div>
+  <h2 class="cta-title gsap-reveal">Ready to<br><em>eat?</em></h2>
+  <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+     target="_blank" rel="noopener" class="btn-cta gsap-reveal">Order Now</a>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <img src="assets/logo.svg" alt="" class="footer-badge" aria-hidden="true">
+      <p class="footer-copy">© 2025 Kiin Imm Thai Restaurant &nbsp;·&nbsp; Rockville, MD</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/kiinimmthairockville/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+      <a href="https://www.facebook.com/kiinimmthai/" target="_blank" rel="noopener" class="footer-link">Facebook</a>
+      <a href="https://www.yelp.com/biz/kiin-imm-thai-restaurant-rockville-rockville" target="_blank" rel="noopener" class="footer-link">Yelp</a>
+      <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville"
+         target="_blank" rel="noopener" class="footer-cta-link">Order Online</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── GSAP ───────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Custom cursor
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  (function raf() {
+    rx += (mx - rx) * 0.1;
+    ry += (my - ry) * 0.1;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(raf);
+  })();
+
+  document.querySelectorAll('a, button, .dish-card, .platform-card').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+  });
+
+  // ── Page intro sequence
+  const veil = document.getElementById('veil');
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .to(veil, { opacity: 0, duration: 1.1, delay: 0.15 })
+    .set(veil, { display: 'none' })
+    .from('#heroBadge',    { opacity: 0, scale: 0.75, duration: 1.3 }, '<0.3')
+    .from('#heroEyebrow',  { opacity: 0, y: 18, duration: 0.9 }, '<0.25')
+    .from('#heroTitle',    { opacity: 0, y: 44, duration: 1.1 }, '<0.1')
+    .from('#heroTitleSub', { opacity: 0, y: 20, duration: 0.85 }, '<0.15')
+    .from('#heroCta',      { opacity: 0, y: 22, duration: 0.75 }, '<0.12')
+    .from('#heroMeta',     { opacity: 0, duration: 0.55 }, '<0.2')
+    .from('#heroCaption',  { opacity: 0, x: -18, duration: 0.8 }, '<0.05')
+    .from('#heroScroll',   { opacity: 0, y: 10, duration: 0.55 }, '<');
+
+  // ── Hero parallax
+  gsap.to('#heroBg', {
+    yPercent: 28,
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+  });
+
+  // ── Nav scroll state
+  const nav = document.getElementById('nav');
+  ScrollTrigger.create({
+    start: 64,
+    onEnter:     () => nav.classList.add('scrolled'),
+    onLeaveBack: () => nav.classList.remove('scrolled')
+  });
+
+  // ── Scroll reveals
+  gsap.utils.toArray('.gsap-reveal').forEach(el => {
+    gsap.from(el, {
+      opacity: 0,
+      y: 30,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+
+  // ── Hamburger + panel
+  const hamburger    = document.getElementById('hamburger');
+  const panel        = document.getElementById('panel');
+  const panelOverlay = document.getElementById('panelOverlay');
+  const panelClose   = document.getElementById('panelClose');
+
+  function openPanel() {
+    panel.classList.add('open');
+    panelOverlay.classList.add('active');
+    hamburger.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    panelOverlay.classList.remove('active');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () =>
+    panel.classList.contains('open') ? closePanel() : openPanel()
+  );
+  panelClose.addEventListener('click', closePanel);
+  panelOverlay.addEventListener('click', closePanel);
+  document.querySelectorAll('[data-panel-close]').forEach(el =>
+    el.addEventListener('click', () => { closePanel(); })
+  );
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+  });
+</script>
+</body>
+</html>
