@@ -257,87 +257,176 @@
       padding: 28px 96px;
       font-size: 10px; font-weight: 700;
       letter-spacing: 0.26em; text-transform: uppercase;
-      color: var(--text); text-align: center;
+      color: #f5e8d0; text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       background:
-        repeating-linear-gradient(
-          86deg,
-          transparent 0, transparent 9px,
-          rgba(0,0,0,0.03) 9px, rgba(0,0,0,0.03) 10px,
-          transparent 10px, transparent 16px,
-          rgba(255,255,255,0.018) 16px, rgba(255,255,255,0.018) 17px
+        /* Fine surface scratches */
+        repeating-linear-gradient(92deg,
+          transparent 0px, transparent 3px,
+          rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px,
+          transparent 4px, transparent 9px,
+          rgba(255,255,255,0.012) 9px, rgba(255,255,255,0.012) 10px
         ),
-        linear-gradient(175deg, #5a3218 0%, #3d1c07 35%, #4e2a10 65%, #3a1a05 100%);
-      border-top:    1px solid rgba(180,100,40,0.55);
-      border-left:   1px solid rgba(140,78,24,0.4);
-      border-right:  1px solid rgba(0,0,0,0.5);
-      border-bottom: 1px solid rgba(0,0,0,0.55);
+        /* Main wood grain — varied spacing, slight angle */
+        repeating-linear-gradient(88.2deg,
+          transparent 0px, transparent 4px,
+          rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px,
+          transparent 5px, transparent 10px,
+          rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px,
+          transparent 11px, transparent 18px,
+          rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px,
+          transparent 20px, transparent 27px,
+          rgba(255,255,255,0.02) 27px, rgba(255,255,255,0.02) 28px,
+          transparent 28px, transparent 36px,
+          rgba(0,0,0,0.04) 36px, rgba(0,0,0,0.04) 37px
+        ),
+        /* Bevel highlight top / shadow bottom */
+        linear-gradient(to bottom,
+          rgba(255,255,255,0.12) 0%,
+          rgba(255,255,255,0.03) 12%,
+          transparent 40%,
+          rgba(0,0,0,0.08) 85%,
+          rgba(0,0,0,0.22) 100%
+        ),
+        /* Dark knot cluster */
+        radial-gradient(ellipse 55% 18% at 68% 72%, rgba(15,5,0,0.28) 0%, transparent 100%),
+        /* Warm knot highlight */
+        radial-gradient(ellipse 30% 12% at 28% 38%, rgba(140,70,10,0.18) 0%, transparent 100%),
+        /* Base colour — natural walnut tones */
+        linear-gradient(171deg,
+          #8c5228 0%,
+          #5a2c0e 14%,
+          #7a4520 30%,
+          #3e1a06 48%,
+          #6b3918 64%,
+          #4a2208 78%,
+          #3a1805 100%
+        );
+      border-top:    1px solid rgba(200,130,55,0.6);
+      border-left:   1px solid rgba(160,90,30,0.45);
+      border-right:  1px solid rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(0,0,0,0.6);
       box-shadow:
-        0 6px 24px rgba(0,0,0,0.65),
-        0 2px 6px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.07),
-        inset 0 -1px 0 rgba(0,0,0,0.35);
+        0 8px 28px rgba(0,0,0,0.7),
+        0 3px 8px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.1),
+        inset 0 -1px 0 rgba(0,0,0,0.4),
+        inset 1px 0 0 rgba(255,255,255,0.04),
+        inset -1px 0 0 rgba(0,0,0,0.25);
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       overflow: visible;
     }
     .btn-plank:hover {
       transform: translateY(-3px);
       box-shadow:
-        0 10px 32px rgba(0,0,0,0.7),
-        0 4px 12px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.07);
+        0 14px 36px rgba(0,0,0,0.75),
+        0 5px 14px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.1),
+        inset 0 -1px 0 rgba(0,0,0,0.4);
     }
-    /* Nail heads */
+    /* Nail heads — realistic brass */
     .btn-plank .nail {
       position: absolute;
-      width: 10px; height: 10px;
+      width: 11px; height: 11px;
       border-radius: 50%;
-      background: radial-gradient(
-        circle at 33% 28%,
-        #f0d880 0%,
-        #c8980c 38%,
-        #8b6400 68%,
-        #3e2a00 100%
-      );
+      background:
+        radial-gradient(circle at 36% 32%,
+          #fff8c0 0%,
+          #f2d060 18%,
+          #c8900a 42%,
+          #8b6000 64%,
+          #4a3000 82%,
+          #1e1200 100%
+        );
       box-shadow:
-        inset 0 1px 2px rgba(255,255,255,0.3),
-        inset 0 -1px 2px rgba(0,0,0,0.5),
-        0 2px 5px rgba(0,0,0,0.7);
+        inset 0 1px 2px rgba(255,255,255,0.4),
+        inset 0 -1px 2px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(0,0,0,0.4),
+        0 2px 6px rgba(0,0,0,0.75);
     }
     .nail.tl { top:  8px; left:  10px; }
     .nail.tr { top:  8px; right: 10px; }
     .nail.bl { bottom: 8px; left:  10px; }
     .nail.br { bottom: 8px; right: 10px; }
 
-    /* Primary plank = warmer gold tone */
+    /* Primary plank — slightly richer amber wood */
     .btn-plank-primary {
       background:
-        repeating-linear-gradient(
-          86deg,
-          transparent 0, transparent 9px,
-          rgba(0,0,0,0.03) 9px, rgba(0,0,0,0.03) 10px,
-          transparent 10px, transparent 16px,
-          rgba(255,255,255,0.018) 16px, rgba(255,255,255,0.018) 17px
+        repeating-linear-gradient(92deg,
+          transparent 0px, transparent 3px,
+          rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px,
+          transparent 4px, transparent 9px,
+          rgba(255,255,255,0.012) 9px, rgba(255,255,255,0.012) 10px
         ),
-        linear-gradient(175deg, #6a3c1a 0%, #4a2208 35%, #5e3214 65%, #432008 100%);
+        repeating-linear-gradient(88.2deg,
+          transparent 0px, transparent 4px,
+          rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px,
+          transparent 5px, transparent 10px,
+          rgba(255,255,255,0.038) 10px, rgba(255,255,255,0.038) 11px,
+          transparent 11px, transparent 18px,
+          rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px,
+          transparent 20px, transparent 27px,
+          rgba(255,255,255,0.022) 27px, rgba(255,255,255,0.022) 28px,
+          transparent 28px, transparent 36px,
+          rgba(0,0,0,0.04) 36px, rgba(0,0,0,0.04) 37px
+        ),
+        linear-gradient(to bottom,
+          rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 12%,
+          transparent 40%, rgba(0,0,0,0.08) 85%, rgba(0,0,0,0.22) 100%
+        ),
+        radial-gradient(ellipse 55% 18% at 65% 70%, rgba(20,6,0,0.3) 0%, transparent 100%),
+        radial-gradient(ellipse 28% 14% at 32% 36%, rgba(160,80,12,0.2) 0%, transparent 100%),
+        linear-gradient(171deg,
+          #9e6030 0%, #662f10 14%, #8c4e24 30%,
+          #48200a 48%, #7c4420 64%, #562812 78%, #401c07 100%
+        );
     }
 
     /* ══════════════════════════════════════════
        TRUST BAR
     ══════════════════════════════════════════ */
     .trust-bar {
-      background: var(--main); overflow: hidden; padding: 16px 0;
+      background: var(--main); overflow: hidden; padding: 22px 0;
       border-top: 1px solid rgba(255,255,255,0.05);
-      border-bottom: 1px solid rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(0,0,0,0.35);
     }
-    .trust-track { display: flex; animation: marquee 44s linear infinite; white-space: nowrap; }
+    .trust-track { display: flex; animation: marquee 60s linear infinite; white-space: nowrap; align-items: center; }
     .trust-item {
-      display: inline-flex; align-items: center; gap: 30px; padding: 0 30px;
-      font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(240,235,224,0.65);
+      display: inline-flex; align-items: center; gap: 40px; padding: 0 40px;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(240,235,224,0.6);
     }
     .trust-item a { transition: color 0.2s; }
     .trust-item a:hover { color: var(--gold); }
-    .trust-dot { color: var(--gold); font-size: 5px; }
+    .trust-dot { color: var(--gold); font-size: 7px; flex-shrink: 0; }
+
+    /* Thai name callout in trust bar */
+    .trust-thai {
+      display: inline-flex; align-items: center; gap: 40px; padding: 0 40px;
+      white-space: nowrap; font-size: 13px; letter-spacing: 0.04em; text-transform: none;
+      color: rgba(240,235,224,0.55);
+    }
+    .trust-thai .thai-char { font-size: 16px; color: rgba(240,235,224,0.82); }
+    .trust-thai strong { color: var(--text); font-weight: 700; }
+    .trust-thai em { font-style: italic; color: var(--gold); font-weight: 500; }
+
+    /* Washington Post logo treatment */
+    .wapo-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: rgba(240,235,224,0.75); transition: color 0.2s;
+      text-decoration: none;
+    }
+    .wapo-badge:hover { color: var(--text); }
+    .wapo-w {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 28px; font-weight: 700; line-height: 1;
+      color: inherit; letter-spacing: -0.02em;
+    }
+    .wapo-text {
+      display: flex; flex-direction: column; line-height: 1.2;
+      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+      font-family: var(--sans); font-weight: 600;
+    }
 
     /* ══════════════════════════════════════════
        SHARED SECTION
@@ -585,18 +674,58 @@
 <!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-track" aria-hidden="true">
-    <span class="trust-item"><a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener">Washington Post</a><span class="trust-dot">✦</span></span>
+
+    <!-- WaPo logo badge -->
+    <span class="trust-item">
+      <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener" class="wapo-badge">
+        <span class="wapo-w">W</span>
+        <span class="wapo-text"><span>The Washington</span><span>Post</span></span>
+      </a>
+      <span class="trust-dot">✦</span>
+    </span>
+
+    <!-- Thai name meaning -->
+    <span class="trust-thai">
+      <span class="thai-char">กินอิ่ม</span>
+      &nbsp;=&nbsp;
+      <strong>"eat until full"</strong>
+      &nbsp;·&nbsp;
+      <span class="thai-char">กิน</span>&nbsp;<em>(kiin)</em>&nbsp;= to eat
+      &nbsp;·&nbsp;
+      <span class="thai-char">อิ่ม</span>&nbsp;<em>(imm)</em>&nbsp;= full / satisfied
+      <span class="trust-dot">✦</span>
+    </span>
+
     <span class="trust-item">PBS Signature Dish 2025<span class="trust-dot">✦</span></span>
     <span class="trust-item">★★★★★ &nbsp;1,100+ Reviews<span class="trust-dot">✦</span></span>
     <span class="trust-item">Est. 2018<span class="trust-dot">✦</span></span>
     <span class="trust-item">785-D Rockville Pike, MD<span class="trust-dot">✦</span></span>
     <span class="trust-item">Authentic Thai Street Food<span class="trust-dot">✦</span></span>
-    <span class="trust-item"><a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener">Washington Post</a><span class="trust-dot">✦</span></span>
+
+    <!-- Duplicate set for seamless loop -->
+    <span class="trust-item">
+      <a href="https://www.washingtonpost.com/goingoutguide/restaurants/terrific-thai-street-food-meets-you-curbside-in-rockville/2020/06/08/32a76d20-a697-11ea-b619-3f9133bbb482_story.html" target="_blank" rel="noopener" class="wapo-badge">
+        <span class="wapo-w">W</span>
+        <span class="wapo-text"><span>The Washington</span><span>Post</span></span>
+      </a>
+      <span class="trust-dot">✦</span>
+    </span>
+    <span class="trust-thai">
+      <span class="thai-char">กินอิ่ม</span>
+      &nbsp;=&nbsp;
+      <strong>"eat until full"</strong>
+      &nbsp;·&nbsp;
+      <span class="thai-char">กิน</span>&nbsp;<em>(kiin)</em>&nbsp;= to eat
+      &nbsp;·&nbsp;
+      <span class="thai-char">อิ่ม</span>&nbsp;<em>(imm)</em>&nbsp;= full / satisfied
+      <span class="trust-dot">✦</span>
+    </span>
     <span class="trust-item">PBS Signature Dish 2025<span class="trust-dot">✦</span></span>
     <span class="trust-item">★★★★★ &nbsp;1,100+ Reviews<span class="trust-dot">✦</span></span>
     <span class="trust-item">Est. 2018<span class="trust-dot">✦</span></span>
     <span class="trust-item">785-D Rockville Pike, MD<span class="trust-dot">✦</span></span>
     <span class="trust-item">Authentic Thai Street Food<span class="trust-dot">✦</span></span>
+
   </div>
 </div>
 
