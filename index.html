@@ -203,7 +203,6 @@
     ══════════════════════════════════════════ */
     .hero {
       position: relative; height: 100vh; min-height: 760px;
-      display: flex; flex-direction: column;
       overflow: hidden; background: var(--bg);
     }
     .hero-bg {
@@ -225,15 +224,16 @@
       background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.45) 100%);
     }
     .hero-inner {
-      position: relative; z-index: 4;
+      position: absolute; inset: 0; z-index: 4;
       display: flex; flex-direction: column;
-      width: 100%; height: 100%;
+      align-items: center;
     }
     .hero-content {
       padding-top: 148px;
       text-align: center;
       flex-shrink: 0;
       padding-bottom: 24px;
+      width: 100%;
     }
     .hero-wordmark {
       height: 72px; width: auto;
@@ -270,9 +270,10 @@
 
     /* ── Dish Orbs ── */
     .hero-dishes {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 58%;
+      pointer-events: none;
       animation: fadeIn 1.4s ease 0.9s both;
     }
     .dish-orb {
@@ -281,6 +282,7 @@
       cursor: grab;
       user-select: none;
       touch-action: none;
+      pointer-events: all;
       transition: filter 0.3s;
     }
     .dish-orb:active, .dish-orb.dragging { cursor: grabbing; }
@@ -649,7 +651,7 @@
 <div id="loco-scroll" data-scroll-container>
 
 <!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero" id="hero" data-scroll-section>
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-vignette"></div>
@@ -892,7 +894,7 @@
   const locoScroll = new LocomotiveScroll({
     el: scroller,
     smooth: true,
-    lerp: 0.07,
+    lerp: 0.12,
     multiplier: 0.9,
     smartphone: { smooth: true },
     tablet: { smooth: true, breakpoint: 1024 }
