@@ -234,149 +234,73 @@
       font-size: 10px; font-weight: 700;
       letter-spacing: 0.26em; text-transform: uppercase;
       color: #f5e8d0; text-align: center;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.5);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.95), 0 0 16px rgba(0,0,0,0.6);
       background:
-        /* Fine cross-grain perpendicular lines */
-        repeating-linear-gradient(91.4deg,
-          transparent 0px, transparent 2px,
-          rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 3px,
-          transparent 3px, transparent 6px,
-          rgba(255,255,255,0.01) 6px, rgba(255,255,255,0.01) 7px),
-        /* Main long grain — dense, varied spacing */
-        repeating-linear-gradient(88.8deg,
-          transparent 0px, transparent 2px,
-          rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 3px,
-          transparent 3px, transparent 7px,
-          rgba(255,255,255,0.045) 7px, rgba(255,255,255,0.045) 8px,
-          transparent 8px, transparent 13px,
-          rgba(0,0,0,0.055) 13px, rgba(0,0,0,0.055) 14px,
-          transparent 14px, transparent 19px,
-          rgba(255,255,255,0.03) 19px, rgba(255,255,255,0.03) 20px,
-          transparent 20px, transparent 26px,
-          rgba(0,0,0,0.065) 26px, rgba(0,0,0,0.065) 27px,
-          transparent 27px, transparent 33px,
-          rgba(255,255,255,0.038) 33px, rgba(255,255,255,0.038) 34px,
-          transparent 34px, transparent 41px,
-          rgba(0,0,0,0.05) 41px, rgba(0,0,0,0.05) 42px),
-        /* Sheen — light catch on top edge */
         linear-gradient(to bottom,
-          rgba(255,255,255,0.22) 0%,
-          rgba(255,255,255,0.08) 6%,
-          rgba(255,255,255,0.02) 20%,
-          transparent 42%,
-          rgba(0,0,0,0.05) 75%,
-          rgba(0,0,0,0.32) 100%),
-        /* Knot cluster — dark organic spot */
-        radial-gradient(ellipse 28% 55% at 22% 60%, rgba(18,6,0,0.42) 0%, rgba(12,4,0,0.22) 40%, transparent 100%),
-        radial-gradient(ellipse 16% 30% at 24% 58%, rgba(8,2,0,0.35) 0%, transparent 70%),
-        /* Subtle knot right side */
-        radial-gradient(ellipse 20% 40% at 78% 35%, rgba(15,5,0,0.28) 0%, rgba(10,3,0,0.14) 50%, transparent 100%),
-        /* Color variation — wood isn't uniform */
+          rgba(255,255,255,0.18) 0%,
+          rgba(255,255,255,0.04) 10%,
+          transparent 38%,
+          rgba(0,0,0,0.12) 80%,
+          rgba(0,0,0,0.38) 100%),
         linear-gradient(to right,
-          rgba(0,0,0,0.12) 0%,
-          rgba(255,255,255,0.04) 18%,
-          transparent 35%,
-          rgba(255,255,255,0.03) 52%,
-          transparent 68%,
-          rgba(0,0,0,0.08) 85%,
-          rgba(0,0,0,0.14) 100%),
-        /* Base walnut — warm, dark, layered */
-        linear-gradient(166deg,
-          #9a5e2c 0%,
-          #5e2c0c 12%,
-          #8a4c20 24%,
-          #4c2008 36%,
-          #7a4016 48%,
-          #582810 60%,
-          #8c4a1e 72%,
-          #4a2008 84%,
-          #3a1806 100%);
-      border-top: 1px solid rgba(210,145,55,0.7);
-      border-left: 1px solid rgba(170,100,35,0.5);
-      border-right: 1px solid rgba(0,0,0,0.65);
-      border-bottom: 2px solid rgba(0,0,0,0.72);
+          rgba(0,0,0,0.22) 0%,
+          transparent 12%,
+          transparent 88%,
+          rgba(0,0,0,0.22) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover, cover;
+      background-position: center, center, center 30%;
+      border-top: 1px solid rgba(220,160,70,0.65);
+      border-left: 1px solid rgba(180,110,40,0.45);
+      border-right: 1px solid rgba(0,0,0,0.7);
+      border-bottom: 2px solid rgba(0,0,0,0.75);
       box-shadow:
         0 12px 40px rgba(0,0,0,0.8),
         0 4px 12px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.16),
+        inset 0 1px 0 rgba(255,255,255,0.15),
         inset 0 -2px 0 rgba(0,0,0,0.5),
-        inset 2px 0 0 rgba(255,255,255,0.06),
-        inset -2px 0 0 rgba(0,0,0,0.32);
+        inset 2px 0 0 rgba(255,255,255,0.05),
+        inset -2px 0 0 rgba(0,0,0,0.35);
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       overflow: visible;
     }
     .btn-plank:hover {
       transform: translateY(-3px);
       box-shadow:
-        0 18px 50px rgba(0,0,0,0.85),
+        0 20px 52px rgba(0,0,0,0.85),
         0 6px 16px rgba(0,0,0,0.65),
         inset 0 1px 0 rgba(255,255,255,0.18),
         inset 0 -2px 0 rgba(0,0,0,0.5),
-        inset 2px 0 0 rgba(255,255,255,0.06),
-        inset -2px 0 0 rgba(0,0,0,0.32);
+        inset 2px 0 0 rgba(255,255,255,0.05),
+        inset -2px 0 0 rgba(0,0,0,0.35);
     }
     .btn-plank .nail {
       position: absolute; width: 11px; height: 11px; border-radius: 50%;
-      background:
-        radial-gradient(circle at 33% 28%, #fffce0 0%, #f8e870 12%, #e0b820 28%, #c8900a 46%, #8b6000 66%, #4a3000 82%, #1e1200 100%);
-      box-shadow:
-        inset 0 1px 2px rgba(255,255,255,0.5),
-        inset 0 -1px 2px rgba(0,0,0,0.6),
-        0 0 0 1px rgba(0,0,0,0.45),
-        0 2px 6px rgba(0,0,0,0.8);
+      background: radial-gradient(circle at 33% 28%, #fffce0 0%, #f8e870 12%, #e0b820 28%, #c8900a 46%, #8b6000 66%, #4a3000 82%, #1e1200 100%);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.5), inset 0 -1px 2px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.8);
     }
     .nail.tl { top: 8px; left: 10px; }
     .nail.tr { top: 8px; right: 10px; }
     .nail.bl { bottom: 8px; left: 10px; }
     .nail.br { bottom: 8px; right: 10px; }
-    /* Order Now — slightly lighter, more orange-honey tone */
+    /* Order Now — different crop of the same texture, slightly brighter */
     .btn-plank-primary {
       background:
-        repeating-linear-gradient(91.4deg,
-          transparent 0px, transparent 2px,
-          rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 3px,
-          transparent 3px, transparent 6px,
-          rgba(255,255,255,0.01) 6px, rgba(255,255,255,0.01) 7px),
-        repeating-linear-gradient(88.8deg,
-          transparent 0px, transparent 2px,
-          rgba(0,0,0,0.065) 2px, rgba(0,0,0,0.065) 3px,
-          transparent 3px, transparent 7px,
-          rgba(255,255,255,0.05) 7px, rgba(255,255,255,0.05) 8px,
-          transparent 8px, transparent 13px,
-          rgba(0,0,0,0.05) 13px, rgba(0,0,0,0.05) 14px,
-          transparent 14px, transparent 20px,
-          rgba(255,255,255,0.035) 20px, rgba(255,255,255,0.035) 21px,
-          transparent 21px, transparent 28px,
-          rgba(0,0,0,0.06) 28px, rgba(0,0,0,0.06) 29px,
-          transparent 29px, transparent 36px,
-          rgba(255,255,255,0.04) 36px, rgba(255,255,255,0.04) 37px),
         linear-gradient(to bottom,
-          rgba(255,255,255,0.26) 0%,
-          rgba(255,255,255,0.10) 6%,
-          rgba(255,255,255,0.03) 20%,
-          transparent 42%,
-          rgba(0,0,0,0.05) 75%,
-          rgba(0,0,0,0.30) 100%),
-        radial-gradient(ellipse 24% 50% at 20% 65%, rgba(20,7,0,0.38) 0%, rgba(14,4,0,0.2) 42%, transparent 100%),
-        radial-gradient(ellipse 18% 35% at 72% 30%, rgba(16,5,0,0.3) 0%, transparent 100%),
+          rgba(255,255,255,0.22) 0%,
+          rgba(255,255,255,0.06) 10%,
+          transparent 38%,
+          rgba(0,0,0,0.10) 80%,
+          rgba(0,0,0,0.34) 100%),
         linear-gradient(to right,
-          rgba(0,0,0,0.1) 0%,
-          rgba(255,255,255,0.05) 20%,
-          transparent 40%,
-          rgba(255,255,255,0.04) 58%,
-          transparent 75%,
-          rgba(0,0,0,0.1) 100%),
-        linear-gradient(166deg,
-          #b87030 0%,
-          #733614 12%,
-          #a05a26 24%,
-          #5a2a0c 36%,
-          #924c1c 48%,
-          #6a3212 60%,
-          #a25420 72%,
-          #5a2a0c 84%,
-          #4a2008 100%);
-      border-top-color: rgba(230,160,60,0.75);
+          rgba(0,0,0,0.2) 0%,
+          transparent 12%,
+          transparent 88%,
+          rgba(0,0,0,0.2) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover, cover;
+      background-position: center, center, center 60%;
+      border-top-color: rgba(235,170,75,0.7);
     }
 
     /* ══════════════════════════════════════════
@@ -474,15 +398,16 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       cursor: pointer;
       background:
-        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px, transparent 11px, transparent 18px, rgba(0,0,0,0.032) 18px, rgba(0,0,0,0.032) 20px),
-        linear-gradient(to bottom, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(0,0,0,0.22) 100%),
-        radial-gradient(ellipse 55% 18% at 68% 72%, rgba(15,5,0,0.28) 0%, transparent 100%),
-        linear-gradient(171deg, #9e6030 0%, #662f10 14%, #8c4e24 30%, #48200a 48%, #7c4420 64%, #562812 78%, #401c07 100%);
-      border-top: 1px solid rgba(200,130,55,0.6);
-      border-left: 1px solid rgba(160,90,30,0.45);
-      border-right: 1px solid rgba(0,0,0,0.55);
-      border-bottom: 1px solid rgba(0,0,0,0.6);
-      box-shadow: 0 6px 22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+        linear-gradient(to bottom, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 10%, transparent 40%, rgba(0,0,0,0.12) 80%, rgba(0,0,0,0.36) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.2) 0%, transparent 12%, transparent 88%, rgba(0,0,0,0.2) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover, cover;
+      background-position: center, center, center 45%;
+      border-top: 1px solid rgba(220,160,70,0.65);
+      border-left: 1px solid rgba(180,110,40,0.45);
+      border-right: 1px solid rgba(0,0,0,0.7);
+      border-bottom: 2px solid rgba(0,0,0,0.75);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -2px 0 rgba(0,0,0,0.45);
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       overflow: visible;
     }
@@ -533,23 +458,27 @@
       cursor: pointer; text-decoration: none;
       overflow: visible;
       background:
-        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.028) 10px, rgba(255,255,255,0.028) 11px, transparent 11px, transparent 20px, rgba(0,0,0,0.03) 20px, rgba(0,0,0,0.03) 21px),
-        linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 30%, rgba(0,0,0,0.15) 100%),
-        radial-gradient(ellipse 60% 20% at 70% 75%, rgba(15,5,0,0.22) 0%, transparent 100%),
-        linear-gradient(175deg, #6a3c1a 0%, #3a1805 30%, #5a3010 55%, #3d1c06 80%, #2e1504 100%);
-      border-top: 1px solid rgba(180,100,40,0.5);
-      border-left: 1px solid rgba(140,78,24,0.38);
-      border-right: 1px solid rgba(0,0,0,0.55);
-      border-bottom: 1px solid rgba(0,0,0,0.6);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.07);
+        linear-gradient(to bottom, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 12%, transparent 40%, rgba(0,0,0,0.18) 85%, rgba(0,0,0,0.4) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.18) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover, cover;
+      background-position: center, center, center 20%;
+      border-top: 1px solid rgba(210,150,60,0.55);
+      border-left: 1px solid rgba(170,100,35,0.4);
+      border-right: 1px solid rgba(0,0,0,0.65);
+      border-bottom: 2px solid rgba(0,0,0,0.72);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -2px 0 rgba(0,0,0,0.42);
       transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
-    .platform-plank:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.07); }
-    .platform-plank.primary { background:
-        repeating-linear-gradient(88.2deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px, transparent 5px, transparent 10px, rgba(255,255,255,0.035) 10px, rgba(255,255,255,0.035) 11px),
-        linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 30%, rgba(0,0,0,0.15) 100%),
-        linear-gradient(175deg, #9e6030 0%, #48200a 30%, #7c4420 55%, #562812 80%, #401c07 100%);
-      border-top-color: rgba(200,130,55,0.6);
+    .platform-plank:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.78), inset 0 1px 0 rgba(255,255,255,0.1); }
+    .platform-plank.primary {
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 12%, transparent 40%, rgba(0,0,0,0.15) 85%, rgba(0,0,0,0.36) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.15) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover, cover;
+      background-position: center, center, center 75%;
+      border-top-color: rgba(235,170,70,0.65);
     }
     .platform-plank .nail {
       position: absolute; width: 8px; height: 8px; border-radius: 50%;
