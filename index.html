@@ -230,9 +230,9 @@
     /* ── Wooden plank buttons (hero) ── */
     .btn-plank {
       position: relative; display: inline-block;
-      padding: 26px 88px;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 0.26em; text-transform: uppercase;
+      padding: 28px 72px;
+      font-size: 19px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
       color: #f5e8d0; text-align: center;
       text-shadow: 0 1px 4px rgba(0,0,0,0.95), 0 0 16px rgba(0,0,0,0.6);
       background:
@@ -369,7 +369,7 @@
       font-family: var(--serif); font-size: 5.8em; font-weight: 700; color: var(--gold);
       float: left; line-height: 0.72; margin-right: 14px; margin-top: 10px;
     }
-    .copy-body { font-size: 15px; font-weight: 300; color: rgba(240,235,224,0.46); line-height: 1.95; margin-bottom: 20px; }
+    .copy-body { font-size: 17px; font-weight: 300; color: rgba(240,235,224,0.5); line-height: 1.95; margin-bottom: 20px; }
     .copy-divider { width: 48px; height: 1px; background: var(--border); margin: 48px 0; }
     .copy-press { font-size: 13px; color: rgba(240,235,224,0.3); line-height: 1.8; }
     .copy-press a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
@@ -391,9 +391,9 @@
     ══════════════════════════════════════════ */
     .btn-plank-md {
       position: relative; display: inline-block;
-      padding: 20px 60px;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 22px 52px;
+      font-size: 17px; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
       color: #f5e8d0; text-align: center;
       text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       cursor: pointer;
@@ -432,7 +432,7 @@
     .hours-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--border); }
     .hours-row.no-b { border-bottom: none; padding-bottom: 4px; }
     .hours-row.sub { padding-top: 4px; padding-bottom: 16px; }
-    .hours-days { font-size: 13px; color: var(--dim); }
+    .hours-days { font-size: 15px; color: var(--dim); }
     .hours-time { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--text); white-space: nowrap; }
     .hours-time-sub { font-family: var(--serif); font-size: 15px; color: var(--dim); white-space: nowrap; }
     .hours-note { margin-top: 20px; font-size: 11px; font-style: italic; color: rgba(240,235,224,0.24); }
@@ -489,10 +489,10 @@
     .platform-plank .nail.tr { top: 7px; right: 9px; }
     .platform-plank .nail.bl { bottom: 7px; left: 9px; }
     .platform-plank .nail.br { bottom: 7px; right: 9px; }
-    .platform-name { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--text); }
+    .platform-name { font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--text); }
     .platform-plank.primary .platform-name { color: var(--gold); }
-    .platform-note { font-size: 12px; font-weight: 300; color: rgba(240,235,224,0.4); }
-    .platform-arrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,235,224,0.22); margin-top: 14px; }
+    .platform-note { font-size: 15px; font-weight: 300; color: rgba(240,235,224,0.5); }
+    .platform-arrow { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,235,224,0.3); margin-top: 14px; }
     .platform-plank.primary .platform-arrow { color: var(--gold); }
 
     /* ══════════════════════════════════════════
@@ -543,8 +543,51 @@
       .hero-btns { gap: 14px; }
       .platforms-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
-      .hero-wordmark { height: 52px; }
-      .dish-orb-ring { width: 130px; height: 130px; }
+      .sticky-bar { padding: 14px 20px; gap: 10px; }
+      .sticky-bar-order { font-size: 17px; padding: 16px 28px; }
+      .sticky-bar-call { font-size: 15px; }
+    }
+
+    /* ── Sticky bottom bar ── */
+    .sticky-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 250;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      padding: 18px 32px;
+      background: rgba(8,4,2,0.97);
+      backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .sticky-bar.visible { transform: translateY(0); }
+    .sticky-bar-order {
+      font-family: var(--serif); font-size: 20px; font-weight: 600;
+      color: var(--gold); letter-spacing: 0.04em;
+      padding: 16px 40px;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.16) 0%, transparent 40%, rgba(0,0,0,0.3) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover;
+      background-position: center, center 40%;
+      border-top: 1px solid rgba(220,160,70,0.65);
+      border-bottom: 2px solid rgba(0,0,0,0.72);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.12);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .sticky-bar-order:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.7); }
+    .sticky-bar-call {
+      font-size: 17px; font-weight: 600;
+      color: rgba(240,235,224,0.75);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .sticky-bar-call:hover { color: var(--text); }
+    .sticky-bar-divider {
+      width: 1px; height: 32px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -593,6 +636,13 @@
   </div>
 </nav>
 
+<!-- STICKY ORDER BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="sticky-bar-order">Order Now</a>
+  <div class="sticky-bar-divider"></div>
+  <a href="tel:13012511888" class="sticky-bar-call">📞 (301) 251&nbsp;1888</a>
+</div>
+
 <!-- LOCOMOTIVE SCROLL CONTAINER -->
 <div id="loco-scroll" data-scroll-container>
 
@@ -613,6 +663,11 @@
         <span class="nail tl"></span><span class="nail tr"></span>
         <span class="nail bl"></span><span class="nail br"></span>
         Order Now
+      </a>
+      <a href="tel:13012511888" class="btn-plank">
+        <span class="nail tl"></span><span class="nail tr"></span>
+        <span class="nail bl"></span><span class="nail br"></span>
+        Call to Reserve
       </a>
     </div>
   </div>
@@ -806,6 +861,15 @@
   locoScroll.on('scroll', ({ scroll }) => {
     if (scroll.y > 60) nav.classList.add('scrolled');
     else               nav.classList.remove('scrolled');
+  });
+
+  // ── Sticky bar ─────────────────────────────
+  const stickyBar = document.getElementById('stickyBar');
+  const heroEl = document.getElementById('hero');
+  locoScroll.on('scroll', ({ scroll }) => {
+    const threshold = heroEl.offsetHeight * 0.8;
+    if (scroll.y > threshold) stickyBar.classList.add('visible');
+    else stickyBar.classList.remove('visible');
   });
 
   // ── Scroll-velocity trust bar ──────────────
