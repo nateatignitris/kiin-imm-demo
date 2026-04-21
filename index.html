@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,7 +27,7 @@
       --sf:      -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
     }
 
-    html { scroll-behavior: auto; }
+    html { scroll-behavior: smooth; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -36,16 +35,22 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    [data-scroll-container] { min-height: 100vh; }
-    html.has-scroll-smooth { overflow: hidden; }
-    html.has-scroll-dragging { -webkit-user-select: none; user-select: none; }
-    .has-scroll-smooth body { overflow: hidden; }
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .sr {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .sr.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -627,8 +632,8 @@
     <button class="nav-link" onclick="openModal('menu')">Menu</button>
     <button class="nav-link" onclick="openModal('catering')">Catering</button>
     <a href="https://www.toasttab.com/kiin-imm-thai-restaurant-rockville/rewardsSignup" target="_blank" rel="noopener" class="nav-link">Sign Up</a>
-    <a href="#about" class="nav-link" data-loco-scroll>About</a>
-    <a href="#contact" class="nav-link" data-loco-scroll>Contact</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
   </div>
 
   <div class="nav-right">
@@ -643,11 +648,8 @@
   <a href="tel:13012511888" class="sticky-bar-call">📞 (301) 251&nbsp;1888</a>
 </div>
 
-<!-- LOCOMOTIVE SCROLL CONTAINER -->
-<div id="loco-scroll" data-scroll-container>
-
 <!-- HERO -->
-<section class="hero" id="hero" data-scroll-section>
+<section class="hero" id="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-vignette"></div>
@@ -674,7 +676,7 @@
 </section>
 
 <!-- TRUST BAR -->
-<div class="trust-bar" data-scroll-section>
+<div class="trust-bar">
   <div class="trust-track" id="trustTrack" aria-hidden="true">
 
     <!-- Set 1 -->
@@ -719,7 +721,7 @@
 </div>
 
 <!-- BRAND COPY -->
-<section class="section copy-section" id="about" data-scroll-section>
+<section class="section copy-section" id="about">
   <div class="copy-inner">
     <p class="copy-lead sr">Some people are sweet, some are salty, and everybody knows someone who is a little spicy. Others might be considered downright bitter or sour. In the art of Thai street cuisine, those five fundamental tastes are balanced into each dish or the overall meal.</p>
     <p class="copy-body sr">While Thai cooking may be known for its intense flavors, palates may be pleasantly surprised at the variety of refreshing flavors and aromas including ginger, coconut, lemongrass and kaffir lime that give many of the dishes unique depth and complexity.</p>
@@ -730,7 +732,7 @@
 </section>
 
 <!-- ORDER PLATFORMS -->
-<section class="section order-section" id="order" data-scroll-section>
+<section class="section order-section" id="order">
   <div class="section-inner">
     <div class="order-header">
       <p class="label sr">Order online</p>
@@ -770,7 +772,7 @@
 </section>
 
 <!-- HOURS & CONTACT -->
-<section class="section hours-section" id="contact" data-scroll-section>
+<section class="section hours-section" id="contact">
   <div class="hours-grid">
     <div>
       <p class="label sr">Hours</p>
@@ -801,7 +803,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer data-scroll-section>
+<footer>
   <div class="footer-inner">
     <p class="footer-copy">&copy; 2025 Kiin Imm Thai Restaurant &nbsp;&middot;&nbsp; Rockville, MD</p>
     <div class="footer-links">
@@ -813,64 +815,21 @@
   </div>
 </footer>
 
-</div><!-- /loco-scroll -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
 <script>
-  history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-  window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const scroller = document.getElementById('loco-scroll');
-
-  // ── Locomotive Scroll ──────────────────────
-  const locoScroll = new LocomotiveScroll({
-    el: scroller,
-    smooth: true,
-    lerp: 0.08,
-    multiplier: 1.4,
-    smartphone: { smooth: false },
-    tablet: { smooth: true, breakpoint: 1024 }
-  });
-
-  locoScroll.scrollTo(0, { duration: 0, disableLerp: true });
-  locoScroll.update();
-
-  locoScroll.on('scroll', ScrollTrigger.update);
-
-  ScrollTrigger.scrollerProxy(scroller, {
-    scrollTop(value) {
-      return arguments.length
-        ? locoScroll.scrollTo(value, { duration: 0, disableLerp: true })
-        : locoScroll.scroll.instance.scroll.y;
-    },
-    getBoundingClientRect() {
-      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    },
-    pinType: scroller.style.transform ? 'transform' : 'fixed'
-  });
-
   // ── Nav scroll class ───────────────────────
   const nav = document.getElementById('nav');
-  locoScroll.on('scroll', ({ scroll }) => {
-    if (scroll.y > 60) nav.classList.add('scrolled');
-    else               nav.classList.remove('scrolled');
-  });
-
-  // ── Sticky bar ─────────────────────────────
   const stickyBar = document.getElementById('stickyBar');
   const heroEl = document.getElementById('hero');
-  locoScroll.on('scroll', ({ scroll }) => {
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) nav.classList.add('scrolled');
+    else        nav.classList.remove('scrolled');
+
     const threshold = heroEl.offsetHeight * 0.8;
-    if (scroll.y > threshold) stickyBar.classList.add('visible');
-    else stickyBar.classList.remove('visible');
-  });
+    if (y > threshold) stickyBar.classList.add('visible');
+    else               stickyBar.classList.remove('visible');
+  }, { passive: true });
 
   // ── Scroll-velocity trust bar ──────────────
   const trustTrack = document.getElementById('trustTrack');
@@ -887,46 +846,35 @@
     if (marqueePos <= -halfWidth) marqueePos += halfWidth;
     if (marqueePos > 0)           marqueePos -= halfWidth;
     trustTrack.style.transform = `translateX(${marqueePos}px)`;
-    if (Math.abs(marqueeVel) > 0.08) {
-      rAF = requestAnimationFrame(animateMarquee);
-    }
+    if (Math.abs(marqueeVel) > 0.08) rAF = requestAnimationFrame(animateMarquee);
   }
 
-  locoScroll.on('scroll', ({ scroll }) => {
-    const delta = scroll.y - lastScrollY;
-    lastScrollY = scroll.y;
-    if (Math.abs(delta) > 0.1) {
+  window.addEventListener('scroll', () => {
+    const delta = window.scrollY - lastScrollY;
+    lastScrollY = window.scrollY;
+    if (Math.abs(delta) > 0.5) {
       marqueeVel = -delta * 0.55;
       cancelAnimationFrame(rAF);
       rAF = requestAnimationFrame(animateMarquee);
     }
-  });
+  }, { passive: true });
 
-  // ── Scroll reveals ─────────────────────────
-  gsap.utils.toArray('.sr').forEach(el => {
-    gsap.from(el, {
-      opacity: 0, y: 28, duration: 0.85, ease: 'power2.out',
-      scrollTrigger: { trigger: el, scroller, start: 'top 90%', once: true }
+  // ── Scroll reveals (Intersection Observer) ─
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
     });
-  });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
-  ScrollTrigger.refresh();
-
-  // ── Nav anchor links via locomotive ────────
-  document.querySelectorAll('[data-loco-scroll]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) locoScroll.scrollTo(target);
-    });
-  });
+  document.querySelectorAll('.sr').forEach(el => revealObserver.observe(el));
 
   // ── Menu modals ────────────────────────────
   window.openModal = (id) => {
     const modal = document.getElementById('modal-' + id);
     if (!modal) return;
-    locoScroll.stop();
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   };
@@ -934,23 +882,16 @@
     const modal = document.getElementById('modal-' + id);
     if (!modal) return;
     modal.classList.remove('open');
-    locoScroll.start();
     document.body.style.overflow = '';
   };
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      ['menu','catering'].forEach(id => closeModal(id));
-    }
+    if (e.key === 'Escape') ['menu','catering'].forEach(id => closeModal(id));
   });
   document.querySelectorAll('.menu-modal').forEach(modal => {
     modal.addEventListener('click', e => {
-      if (e.target === modal) {
-        const id = modal.id.replace('modal-','');
-        closeModal(id);
-      }
+      if (e.target === modal) closeModal(modal.id.replace('modal-',''));
     });
   });
-
 </script>
 </body>
 </html>
