@@ -766,6 +766,9 @@
 <script>
   history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -782,6 +785,7 @@
   });
 
   locoScroll.scrollTo(0, { duration: 0, disableLerp: true });
+  locoScroll.update();
 
   locoScroll.on('scroll', ScrollTrigger.update);
 
