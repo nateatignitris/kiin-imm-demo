@@ -876,6 +876,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
 <script>
+  history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
   gsap.registerPlugin(ScrollTrigger);
 
   const scroller = document.getElementById('loco-scroll');
@@ -889,6 +892,8 @@
     smartphone: { smooth: true },
     tablet: { smooth: true, breakpoint: 1024 }
   });
+
+  locoScroll.scrollTo(0, { duration: 0, disableLerp: true });
 
   locoScroll.on('scroll', ScrollTrigger.update);
 
