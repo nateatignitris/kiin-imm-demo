@@ -176,7 +176,8 @@
     .hero-bg {
       position: absolute; inset: 0;
       background-image: url('assets/hero/food-spread.jpg');
-      background-size: 100% 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center center;
       background-size: cover; background-position: center;
     }
@@ -381,17 +382,6 @@
     .copy-press { font-size: 13px; color: rgba(240,235,224,0.3); line-height: 1.8; }
     .copy-press a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 
-    /* ══════════════════════════════════════════
-       WHO ARE WE
-    ══════════════════════════════════════════ */
-    .who-section { background: #0e0905; border-top: 1px solid var(--border); }
-    .who-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; max-width: 1140px; margin: 0 auto; }
-    .who-headline { font-family: var(--serif); font-size: clamp(56px, 8vw, 104px); font-weight: 700; color: var(--text); line-height: 0.96; letter-spacing: -0.03em; margin-bottom: 36px; }
-    .who-headline em { font-weight: 300; font-style: italic; }
-    .who-body { font-size: 15px; font-weight: 300; color: var(--dim); line-height: 1.9; margin-bottom: 44px; max-width: 460px; }
-    .who-photo { width: 100%; aspect-ratio: 3/4; border: 1px solid var(--border); overflow: hidden; }
-    .who-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
-    .who-photo:hover img { transform: scale(1.04); }
 
     /* ══════════════════════════════════════════
        PLANK BUTTON (reused for all CTAs)
@@ -502,13 +492,6 @@
     .platform-arrow { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,235,224,0.3); margin-top: 14px; }
     .platform-plank.primary .platform-arrow { color: var(--gold); }
 
-    /* ══════════════════════════════════════════
-       BOTTOM CTA
-    ══════════════════════════════════════════ */
-    .cta-section { background: var(--main); border-top: 1px solid rgba(0,0,0,0.3); text-align: center; padding: 168px 52px; position: relative; overflow: hidden; }
-    .cta-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--serif); font-size: clamp(120px, 22vw, 280px); font-weight: 700; color: rgba(240,235,224,0.025); white-space: nowrap; letter-spacing: -0.04em; pointer-events: none; }
-    .cta-title { position: relative; font-family: var(--serif); font-size: clamp(56px, 9vw, 112px); font-weight: 700; color: var(--text); line-height: 0.98; letter-spacing: -0.03em; margin-bottom: 64px; }
-    .cta-title em { font-weight: 300; font-style: italic; }
 
     /* ══════════════════════════════════════════
        FOOTER
@@ -526,26 +509,75 @@
     @media (max-width: 1100px) {
       .nav-center { gap: 20px; }
     }
+    /* ── Hamburger / mobile menu ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 44px; height: 44px;
+      background: none; border: none; cursor: pointer; padding: 8px;
+      margin-left: auto;
+    }
+    .nav-hamburger span {
+      display: block; width: 100%; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(6,2,0,0.98);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu-link {
+      font-family: var(--serif); font-size: 38px; font-weight: 600; font-style: italic;
+      color: rgba(240,235,224,0.75); letter-spacing: 0.02em;
+      padding: 14px 32px;
+      transition: color 0.2s;
+    }
+    .mobile-menu-link:hover { color: var(--text); }
+    .mobile-menu-divider { width: 40px; height: 1px; background: var(--border); margin: 8px 0; }
+    .mobile-menu-phone {
+      font-family: var(--sf); font-size: 22px; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.06em; margin-top: 16px;
+    }
+    .mobile-menu-order {
+      font-family: var(--serif); font-size: 20px; font-weight: 600;
+      color: var(--text); letter-spacing: 0.04em;
+      margin-top: 8px; padding: 18px 48px;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.16) 0%, transparent 40%, rgba(0,0,0,0.3) 100%),
+        url('assets/textures/wood.jpg');
+      background-size: cover, cover;
+      background-position: center, center 40%;
+      border-top: 1px solid rgba(220,160,70,0.65);
+      border-bottom: 2px solid rgba(0,0,0,0.72);
+    }
+
     @media (max-width: 900px) {
-      nav { grid-template-columns: 1fr 1fr; height: 90px; }
+      nav { grid-template-columns: 1fr auto; height: 90px; }
       nav.scrolled { height: 72px; }
       .nav-wordmark { height: 72px; }
       nav.scrolled .nav-wordmark { height: 56px; }
       .nav-center { display: none; }
-      .nav-right { justify-content: flex-end; }
-      .who-inner { grid-template-columns: 1fr; }
-      .who-photo { display: none; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
       .hours-grid { grid-template-columns: 1fr; gap: 64px; }
       .platforms-grid { grid-template-columns: repeat(2, 1fr); }
       .section { padding: 100px 28px; }
-      .cta-section { padding: 120px 28px; }
       nav, footer { padding-left: 28px; padding-right: 28px; }
     }
     @media (max-width: 600px) {
       nav, footer { padding-left: 20px; padding-right: 20px; }
-      .nav-phone { display: none; }
       .section { padding: 88px 20px; }
-      .cta-section { padding: 96px 20px; }
       .btn-plank { padding: 24px 52px; }
       .hero-btns { gap: 14px; }
       .platforms-grid { grid-template-columns: 1fr; }
@@ -607,7 +639,7 @@
     <button class="modal-close" onclick="closeModal('menu')">Close</button>
   </div>
   <div class="menu-modal-body">
-    <img src="assets/menus/menu-1.png" alt="Kiin Imm Menu Page 1" loading="eager">
+    <img src="assets/menus/menu-1.png" alt="Kiin Imm Menu Page 1" loading="lazy">
     <img src="assets/menus/menu-2.png" alt="Kiin Imm Menu Page 2" loading="lazy">
   </div>
 </div>
@@ -618,7 +650,7 @@
     <button class="modal-close" onclick="closeModal('catering')">Close</button>
   </div>
   <div class="menu-modal-body">
-    <img src="assets/menus/catering-menu-1.png" alt="Kiin Imm Catering Menu Page 1" loading="eager">
+    <img src="assets/menus/catering-menu-1.png" alt="Kiin Imm Catering Menu Page 1" loading="lazy">
     <img src="assets/menus/catering-menu-2.png" alt="Kiin Imm Catering Menu Page 2" loading="lazy">
   </div>
 </div>
@@ -633,7 +665,6 @@
     <a href="/" class="nav-link">Home</a>
     <button class="nav-link" onclick="openModal('menu')">Menu</button>
     <button class="nav-link" onclick="openModal('catering')">Catering</button>
-    <a href="https://www.toasttab.com/kiin-imm-thai-restaurant-rockville/rewardsSignup" target="_blank" rel="noopener" class="nav-link">Sign Up</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
@@ -641,13 +672,29 @@
   <div class="nav-right">
     <a href="tel:13012511888" class="nav-phone">(301) 251&nbsp;1888</a>
   </div>
+
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" class="mobile-menu-link">Home</a>
+  <button class="mobile-menu-link" style="background:none;border:none;cursor:pointer;" onclick="openModal('menu');closeMobileMenu()">Menu</button>
+  <button class="mobile-menu-link" style="background:none;border:none;cursor:pointer;" onclick="openModal('catering');closeMobileMenu()">Catering</button>
+  <a href="#about" class="mobile-menu-link" onclick="closeMobileMenu()">About</a>
+  <a href="#contact" class="mobile-menu-link" onclick="closeMobileMenu()">Contact</a>
+  <div class="mobile-menu-divider"></div>
+  <a href="tel:13012511888" class="mobile-menu-phone">(301) 251&nbsp;1888</a>
+  <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="mobile-menu-order">Order Now</a>
+</div>
 
 <!-- STICKY ORDER BAR -->
 <div class="sticky-bar" id="stickyBar">
   <a href="https://order.toasttab.com/online/kiin-imm-thai-restaurant-rockville" target="_blank" rel="noopener" class="sticky-bar-order">Order Now</a>
   <div class="sticky-bar-divider"></div>
-  <a href="tel:13012511888" class="sticky-bar-call">📞 (301) 251&nbsp;1888</a>
+  <a href="tel:13012511888" class="sticky-bar-call">(301) 251&nbsp;1888</a>
 </div>
 
 <!-- HERO -->
@@ -833,32 +880,28 @@
     else               stickyBar.classList.remove('visible');
   }, { passive: true });
 
-  // ── Scroll-velocity trust bar ──────────────
+  // ── Auto-scrolling trust bar ───────────────
   const trustTrack = document.getElementById('trustTrack');
   let marqueePos = 0;
-  let marqueeVel = 0;
+  let scrollBoost = 0;
   let lastScrollY = 0;
-  let rAF = null;
+  const BASE_SPEED = 0.6;
 
   function animateMarquee() {
     if (!trustTrack) return;
     const halfWidth = trustTrack.scrollWidth / 2;
-    marqueeVel *= 0.88;
-    marqueePos += marqueeVel;
+    scrollBoost *= 0.9;
+    marqueePos -= BASE_SPEED + Math.max(0, scrollBoost);
     if (marqueePos <= -halfWidth) marqueePos += halfWidth;
-    if (marqueePos > 0)           marqueePos -= halfWidth;
     trustTrack.style.transform = `translateX(${marqueePos}px)`;
-    if (Math.abs(marqueeVel) > 0.08) rAF = requestAnimationFrame(animateMarquee);
+    requestAnimationFrame(animateMarquee);
   }
+  animateMarquee();
 
   window.addEventListener('scroll', () => {
     const delta = window.scrollY - lastScrollY;
     lastScrollY = window.scrollY;
-    if (Math.abs(delta) > 0.5) {
-      marqueeVel = -delta * 0.55;
-      cancelAnimationFrame(rAF);
-      rAF = requestAnimationFrame(animateMarquee);
-    }
+    if (delta > 0) scrollBoost = Math.min(scrollBoost + delta * 0.4, 12);
   }, { passive: true });
 
   // ── Scroll reveals (Intersection Observer) ─
@@ -872,6 +915,26 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.sr').forEach(el => revealObserver.observe(el));
+
+  // ── Mobile hamburger ───────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  window.closeMobileMenu = () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
 
   // ── Menu modals ────────────────────────────
   window.openModal = (id) => {
@@ -887,7 +950,10 @@
     document.body.style.overflow = '';
   };
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') ['menu','catering'].forEach(id => closeModal(id));
+    if (e.key === 'Escape') {
+      ['menu','catering'].forEach(id => closeModal(id));
+      closeMobileMenu();
+    }
   });
   document.querySelectorAll('.menu-modal').forEach(modal => {
     modal.addEventListener('click', e => {
